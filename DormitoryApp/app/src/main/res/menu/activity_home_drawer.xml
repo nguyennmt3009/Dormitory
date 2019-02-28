@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="Trang chủ" />
+        <item
+            android:id="@+id/nav_history"
+            android:icon="@drawable/ic_history_black_24dp"
+            android:title="Lịch sử giao dịch" />
+        <item
+            android:id="@+id/nav_report"
+            android:icon="@drawable/ic_report_black_24dp"
+            android:title="Báo cáo sự cố" />
+        <item
+            android:id="@+id/nav_contract"
+            android:icon="@drawable/ic_library_books_black_24dp"
+            android:title="Hợp đồng trọ" />
+    </group>
+
+    <item android:title="Tài khoản của bạn">
+        <menu>
+            <item
+                android:id="@+id/nav_personal"
+                android:icon="@drawable/ic_person_black_24dp"
+                android:title="Thông tin cá nhân" />
+            <item
+                android:id="@+id/nav_account"
+                android:icon="@drawable/ic_account_balance_black_24dp"
+                android:title="Tài khoản" />
+            <item
+                android:id="@+id/nav_change_password"
+                android:icon="@drawable/ic_lock_outline_black_24dp"
+                android:title="Đổi mật khẩu" />
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/ic_exit_to_app_black_24dp"
+                android:title="Đăng xuất" />
+        </menu>
+    </item>
+
+</menu>
