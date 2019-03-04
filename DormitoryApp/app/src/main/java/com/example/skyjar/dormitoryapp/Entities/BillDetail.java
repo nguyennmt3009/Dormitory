@@ -10,12 +10,12 @@ public class BillDetail implements Serializable {
     private String room;
     private String apartment;
     private double amount;
-    private boolean status;
-    private Date createdDate;
+    private String status;
+    private String createdDate;
     private List<BrandService> serviceList;
 
     public BillDetail(int id, String month, String room, String apartment,
-                      double amount, boolean status, Date createdDate) {
+                      double amount, String status, String createdDate) {
         this.id = id;
         this.month = month;
         this.room = room;
@@ -26,7 +26,7 @@ public class BillDetail implements Serializable {
     }
 
     public BillDetail(int id, String month, String room, String apartment, double amount,
-                      boolean status, Date createdDate, List<BrandService> serviceList) {
+                      String status, String createdDate, List<BrandService> serviceList) {
         this.id = id;
         this.month = month;
         this.room = room;
@@ -35,6 +35,14 @@ public class BillDetail implements Serializable {
         this.status = status;
         this.createdDate = createdDate;
         this.serviceList = serviceList;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public List<BrandService> getServiceList() {
@@ -85,19 +93,11 @@ public class BillDetail implements Serializable {
         this.amount = amount;
     }
 
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
-
-    public Date getCreatedDate() {
+    public String getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(String createdDate) {
         this.createdDate = createdDate;
     }
 }

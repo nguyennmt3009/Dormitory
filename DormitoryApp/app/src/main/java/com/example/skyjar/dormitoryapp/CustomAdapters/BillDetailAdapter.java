@@ -2,6 +2,7 @@ package com.example.skyjar.dormitoryapp.CustomAdapters;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -98,17 +99,17 @@ public class BillDetailAdapter extends BaseAdapter {
 
         BillDetail bill = billDetails.get(position);
 
-        android.text.format.DateFormat df = new android.text.format.DateFormat();
-        holder.txtDate.setText(df.format("dd/MM/yyyy", bill.getCreatedDate()).toString());
-        if(bill.isStatus()) {
-            holder.txtStatus.setText("Đã thanh toán");
-        } else {
-            holder.txtStatus.setText("Chưa thanh toán");
-        }
+        holder.txtDate.setText(bill.getCreatedDate());
+        holder.txtStatus.setText(bill.getStatus());
+        if(bill.getStatus().contains("Đã"))
+            holder.txtStatus.setTextColor(Color.rgb(49, 183, 34));
+        else
+            holder.txtStatus.setTextColor(Color.rgb(255, 33, 33));
         holder.txtRoom.setText(bill.getRoom());
         holder.txtAmount.setText("Số tiền: " + bill.getAmount() + " đồng");
         holder.txtApartment.setText(bill.getApartment());
         holder.txtMonth.setText(bill.getMonth());
+        holder.btnDetail.setId(bill.getId());
 
         return convertView;
     }

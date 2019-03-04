@@ -13,11 +13,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.skyjar.dormitoryapp.CustomAdapters.BillDetailAdapter;
 import com.example.skyjar.dormitoryapp.Entities.BillDetail;
+import com.example.skyjar.dormitoryapp.Entities.BrandService;
+import com.example.skyjar.dormitoryapp.Repositories.BillRepository;
+import com.example.skyjar.dormitoryapp.Repositories.BillRepositoryImplement;
+import com.example.skyjar.dormitoryapp.utilsService.CallBackData;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -26,6 +30,8 @@ import java.util.List;
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     BillDetailAdapter billDetailAdapter;
+    List<BillDetail> listBills;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,19 +59,47 @@ public class HomeActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        initialView();
+
+    }
+
+    private void initialView(){
+        BillRepository repository = new BillRepositoryImplement();
+
+        repository.getBills(this, new CallBackData<List<BillDetail>>() {
+            @Override
+            public void onSuccess(List<BillDetail> billDetails) {
+                Toast.makeText(HomeActivity.this, "Get data successful", Toast.LENGTH_SHORT).show();
+                buildLayout(billDetails);
+            }
+
+            @Override
+            public void onFail(String msg) {
+                Toast.makeText(HomeActivity.this, "Get data failure: " + msg, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+    }
+
+    private void buildLayout(List<BillDetail> result) {
         //Render bill list
         ListView listView = findViewById(R.id.listBill);
 
-        List<BillDetail> listBills = new ArrayList<BillDetail>();
-        listBills.add(new BillDetail(1,"Hóa đơn tháng 5", "Phòng 205"
-                , "Chung cư Hưng Ngân", 3000000, false, new Date()));
-        listBills.add(new BillDetail(2,"Hóa đơn tháng 4", "Phòng 15"
-                , "Tòa nhà Hòa Lạc", 1500000, true, new Date()));
-
-        billDetailAdapter = new BillDetailAdapter(this, R.layout.bill_detail_row, listBills);
+        listBills = result;
+        billDetailAdapter = new BillDetailAdapter(this, R.layout.row_bill_detail, listBills);
 
         listView.setAdapter(billDetailAdapter);
+    }
 
+    public void clickBillDetail(View view) {
+        Intent intent = new Intent(this, BillDetailActivity.class);
+        Bundle bundle = new Bundle();
+        int index = view.getId();
+        bundle.putInt("BillDetailId", index);
+        bundle.putSerializable("BillDetail", listBills.get(0));
+        intent.putExtra("Bundle", bundle);
+        startActivity(intent);
     }
 
     @Override

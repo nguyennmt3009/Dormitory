@@ -78,6 +78,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginRight="20dp"
             android:background="@drawable/btndetail"
+            android:onClick="clickBillDetail"
             />
     </LinearLayout>
 
