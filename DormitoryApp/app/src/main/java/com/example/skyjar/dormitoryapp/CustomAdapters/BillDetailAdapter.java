@@ -75,7 +75,6 @@ public class BillDetailAdapter extends BaseAdapter {
         TextView txtDate;
         Button btnDetail;
     }
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;

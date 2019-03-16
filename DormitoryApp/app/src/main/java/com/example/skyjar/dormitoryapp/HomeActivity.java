@@ -146,7 +146,7 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.nav_history) {
 
         } else if (id == R.id.nav_report) {
-            intent = new Intent(this, ReportActivity.class);
+            intent = new Intent(this, CreateReportActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_contract) {
 
