@@ -1,103 +1,39 @@
 package com.example.skyjar.dormitoryapp.Entities;
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
 
 public class BillDetail implements Serializable {
-    private int id;
-    private String month;
-    private String room;
-    private String apartment;
-    private double amount;
-    private String status;
-    private String createdDate;
-    private List<BrandService> serviceList;
+    private String name;
+    private int quantity;
+    private double price;
 
-    public BillDetail(int id, String month, String room, String apartment,
-                      double amount, String status, String createdDate) {
-        this.id = id;
-        this.month = month;
-        this.room = room;
-        this.apartment = apartment;
-        this.amount = amount;
-        this.status = status;
-        this.createdDate = createdDate;
+    public BillDetail(String name, int quantity, double price) {
+        this.name = name;
+        this.quantity = quantity;
+        this.price = price;
     }
 
-    public BillDetail(int id, String month, String room, String apartment, double amount,
-                      String status, String createdDate, List<BrandService> serviceList) {
-        this.id = id;
-        this.month = month;
-        this.room = room;
-        this.apartment = apartment;
-        this.amount = amount;
-        this.status = status;
-        this.createdDate = createdDate;
-        this.serviceList = serviceList;
+    public String getName() {
+        return name;
     }
 
-    public String getStatus() {
-        return status;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public List<BrandService> getServiceList() {
-        return serviceList;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
-    public void setServiceList(List<BrandService> serviceList) {
-        this.serviceList = serviceList;
+    public double getPrice() {
+        return price;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getMonth() {
-        return month;
-    }
-
-    public void setMonth(String month) {
-        this.month = month;
-    }
-
-    public String getRoom() {
-        return room;
-    }
-
-    public void setRoom(String room) {
-        this.room = room;
-    }
-
-    public String getApartment() {
-        return apartment;
-    }
-
-    public void setApartment(String apartment) {
-        this.apartment = apartment;
-    }
-
-    public double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
-
-    public String getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(String createdDate) {
-        this.createdDate = createdDate;
+    public void setPrice(double price) {
+        this.price = price;
     }
 }

@@ -1,9 +1,8 @@
 package com.example.skyjar.dormitoryapp;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -14,23 +13,24 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.skyjar.dormitoryapp.CustomAdapters.BillDetailAdapter;
-import com.example.skyjar.dormitoryapp.Entities.BillDetail;
-import com.example.skyjar.dormitoryapp.Entities.BrandService;
+import com.example.skyjar.dormitoryapp.CustomAdapters.BillAdapter;
+import com.example.skyjar.dormitoryapp.Entities.Bill;
+import com.example.skyjar.dormitoryapp.Entities.User;
 import com.example.skyjar.dormitoryapp.Repositories.BillRepository;
-import com.example.skyjar.dormitoryapp.Repositories.BillRepositoryImplement;
 import com.example.skyjar.dormitoryapp.utilsService.CallBackData;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    BillDetailAdapter billDetailAdapter;
-    List<BillDetail> listBills;
+    BillAdapter billDetailAdapter;
+    List<Bill> listBills;
+    TextView txtWelcome;
+    TextView txtStatusNull;
+    User currentUser = null;
 
 
     @Override
@@ -38,17 +38,19 @@ public class HomeActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         setTitle("Trang Chủ");
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -59,18 +61,31 @@ public class HomeActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        initialView();
+        txtWelcome = findViewById(R.id.txtWelcome);
+        txtStatusNull = findViewById(R.id.txtStatusNull);
 
+        initialView();
     }
 
-    private void initialView(){
-        BillRepository repository = new BillRepositoryImplement();
 
-        repository.getBills(this, new CallBackData<List<BillDetail>>() {
+    private void initialView(){
+        Intent intent = this.getIntent();
+        Bundle bundle = intent.getBundleExtra("Bundle");
+
+        User user = (User) bundle.getSerializable("CurrentUser");
+        currentUser = user;
+
+        txtWelcome.setText("Xin chào, " + user.getFullname());
+
+        BillRepository repository = new BillRepository();
+        repository.getBills(this, "status=false", user.getId(), new CallBackData<List<Bill>>() {
             @Override
-            public void onSuccess(List<BillDetail> billDetails) {
+            public void onSuccess(List<Bill> billDetails) {
                 Toast.makeText(HomeActivity.this, "Get data successful", Toast.LENGTH_SHORT).show();
-                buildLayout(billDetails);
+                if (billDetails.size() == 0)
+                    txtStatusNull.setVisibility(View.VISIBLE);
+                else
+                    buildLayout(billDetails);
             }
 
             @Override
@@ -82,12 +97,13 @@ public class HomeActivity extends AppCompatActivity
 
     }
 
-    private void buildLayout(List<BillDetail> result) {
+    private void buildLayout(List<Bill> result) {
+
         //Render bill list
         ListView listView = findViewById(R.id.listBill);
 
         listBills = result;
-        billDetailAdapter = new BillDetailAdapter(this, R.layout.row_bill_detail, listBills);
+        billDetailAdapter = new BillAdapter(this, R.layout.row_bill_detail, listBills);
 
         listView.setAdapter(billDetailAdapter);
     }
@@ -96,11 +112,20 @@ public class HomeActivity extends AppCompatActivity
         Intent intent = new Intent(this, BillDetailActivity.class);
         Bundle bundle = new Bundle();
         int index = view.getId();
+        boolean f = false;
+        for (Bill b : listBills) {
+            if (b.getId() == index){
+                bundle.putSerializable("BillDetail", b);
+                f = true;
+            }
+        }
+        if(!f) bundle.putSerializable("BillDetail", null);
         bundle.putInt("BillDetailId", index);
-        bundle.putSerializable("BillDetail", listBills.get(0));
+
         intent.putExtra("Bundle", bundle);
         startActivity(intent);
     }
+
 
     @Override
     public void onBackPressed() {
@@ -146,10 +171,11 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.nav_history) {
 
         } else if (id == R.id.nav_report) {
-            intent = new Intent(this, ReportActivity.class);
+            intent = new Intent(this, CreateReportActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_contract) {
-
+            intent = new Intent(this, ReportActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_personal) {
 
         } else if (id == R.id.nav_account) {
@@ -158,11 +184,39 @@ public class HomeActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_logout) {
             intent = new Intent(this, MainActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putInt("Logout", 1);
+            intent.putExtra("Bundle", bundle);
             startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void clickToSortBill(View view) {
+
+
+
+        // Popup
+//        txtStatusNull.setVisibility(View.GONE);
+//
+//        BillRepository repository = new BillRepository();
+//        repository.getBills(this, "abc", currentUser.getId(), new CallBackData<List<Bill>>() {
+//            @Override
+//            public void onSuccess(List<Bill> billDetails) {
+//                Toast.makeText(HomeActivity.this, "Get data successful", Toast.LENGTH_SHORT).show();
+//                if (billDetails.size() == 0)
+//                    txtStatusNull.setVisibility(View.VISIBLE);
+//                else
+//                    buildLayout(billDetails);
+//            }
+//
+//            @Override
+//            public void onFail(String msg) {
+//                Toast.makeText(HomeActivity.this, "Get data failure: " + msg, Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 }

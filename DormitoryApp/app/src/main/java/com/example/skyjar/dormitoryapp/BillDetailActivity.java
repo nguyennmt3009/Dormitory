@@ -10,19 +10,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.skyjar.dormitoryapp.CustomAdapters.BrandServiceAdapter;
-import com.example.skyjar.dormitoryapp.Entities.BillDetail;
-import com.example.skyjar.dormitoryapp.Entities.BrandService;
+import com.example.skyjar.dormitoryapp.CustomAdapters.BillDetailAdapter;
+import com.example.skyjar.dormitoryapp.Entities.Bill;
 import com.example.skyjar.dormitoryapp.Repositories.BillRepository;
-import com.example.skyjar.dormitoryapp.Repositories.BillRepositoryImplement;
 import com.example.skyjar.dormitoryapp.utilsService.CallBackData;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class BillDetailActivity extends AppCompatActivity {
-    BillDetail billDetail;
-    BrandServiceAdapter brandServiceAdapter;
+    Bill billDetail;
+    BillDetailAdapter brandServiceAdapter;
     Toolbar toolbar;
     ListView listView;
     TextView txtId;
@@ -60,27 +55,12 @@ public class BillDetailActivity extends AppCompatActivity {
         //Call Data
         Intent intent = this.getIntent();
         Bundle bundle = intent.getBundleExtra("Bundle");
-        billDetail = (BillDetail) bundle.getSerializable("BillDetail");
+        billDetail = (Bill) bundle.getSerializable("BillDetail");
 
-        int index = bundle.getInt("BillDetailId");
-
-        BillRepository repository = new BillRepositoryImplement();
-
-        repository.getBillDetail(this, index, new CallBackData<BillDetail>() {
-            @Override
-            public void onSuccess(BillDetail billDetail) {
-                Toast.makeText(BillDetailActivity.this, "Get data success", Toast.LENGTH_SHORT).show();
-                buildLayout(billDetail);
-            }
-
-            @Override
-            public void onFail(String msg) {
-                Toast.makeText(BillDetailActivity.this, msg, Toast.LENGTH_SHORT).show();
-            }
-        });
+        buildLayout(billDetail);
     }
     
-    private void buildLayout(BillDetail result) {
+    private void buildLayout(Bill result) {
         txtStatus.setText(result.getStatus());
         if(result.getStatus().contains("ã")) {
             txtStatus.setTextColor(Color.rgb(49, 183, 34));
@@ -90,10 +70,25 @@ public class BillDetailActivity extends AppCompatActivity {
         txtCreatedDate.setText(result.getCreatedDate());
         txtId.setText("Mã hóa đơn: " + result.getId());
 
-        brandServiceAdapter = new BrandServiceAdapter(this, result.getServiceList()); // layout at Adapter class
+        brandServiceAdapter = new BillDetailAdapter(this, result.getBillDetails()); // layout at Adapter class
         listView.setAdapter(brandServiceAdapter);
     }
 
     public void clickToPay(View view) {
+
+        BillRepository repository = new BillRepository();
+        repository.paymentBill(1, 5, new CallBackData<String>() {
+            @Override
+            public void onSuccess(String s) {
+                Toast.makeText(BillDetailActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+
+            @Override
+            public void onFail(String msg) {
+                Toast.makeText(BillDetailActivity.this, "Fail pay " + msg, Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 }

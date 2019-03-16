@@ -1,8 +1,8 @@
 package com.example.skyjar.dormitoryapp.Repositories;
 
-import android.content.Context;
-
-import com.example.skyjar.dormitoryapp.Entities.BillDetail;
+import com.example.skyjar.dormitoryapp.Entities.LoginEntites.LoginResponse;
+import com.example.skyjar.dormitoryapp.Entities.LoginEntites.UserLogin;
+import com.example.skyjar.dormitoryapp.Entities.User;
 import com.example.skyjar.dormitoryapp.utilsService.CallBackData;
 import com.example.skyjar.dormitoryapp.utilsService.ClientApi;
 import com.google.gson.Gson;
@@ -10,20 +10,18 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BillRepositoryImplement implements BillRepository {
+public class UserRepository {
 
-
-    @Override
-    public void getBills(Context context, final CallBackData<List<BillDetail>> callBackData) {
+    public void getUserDetail(String auth, final CallBackData<User> callBackData) {
         ClientApi clientApi = new ClientApi();
-        Call<ResponseBody> serviceCall= clientApi.billService().getBills();
+
+        Call<ResponseBody> serviceCall= clientApi.userService().getUserDetail("Bearer " + auth);
 
         serviceCall.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -32,12 +30,12 @@ public class BillRepositoryImplement implements BillRepository {
                     if(response.code()==200){
                         try {
                             String result = response.body().string();
-                            Type type= new TypeToken<List<BillDetail>>(){}.getType();
+                            Type type= new TypeToken<User>(){}.getType();
 
-                            List<BillDetail> billList = new Gson().fromJson(result,type);
+                            User user = new Gson().fromJson(result,type);
 
-                            if(billList != null){
-                                callBackData.onSuccess(billList);
+                            if(user != null){
+                                callBackData.onSuccess(user);
                             }else {
                                 callBackData.onFail("No data!");
                             }
@@ -57,10 +55,11 @@ public class BillRepositoryImplement implements BillRepository {
         });
     }
 
-    @Override
-    public void getBillDetail(Context context, int id, final CallBackData<BillDetail> callBackData) {
+
+    public void login(String username, String password, final CallBackData<LoginResponse> callBackData) {
         ClientApi clientApi = new ClientApi();
-        Call<ResponseBody> serviceCall= clientApi.billService().getBillDetail(id);
+
+        Call<ResponseBody> serviceCall= clientApi.userService().login("password", username, password);
 
         serviceCall.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -69,12 +68,12 @@ public class BillRepositoryImplement implements BillRepository {
                     if(response.code()==200){
                         try {
                             String result = response.body().string();
-                            Type type= new TypeToken<BillDetail>(){}.getType();
+                            Type type= new TypeToken<LoginResponse>(){}.getType();
 
-                            BillDetail billDetail = new Gson().fromJson(result,type);
+                            LoginResponse loginEntity = new Gson().fromJson(result,type);
 
-                            if(billDetail!=null){
-                                callBackData.onSuccess(billDetail);
+                            if(loginEntity != null){
+                                callBackData.onSuccess(loginEntity);
                             }else {
                                 callBackData.onFail("No data!");
                             }

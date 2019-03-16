@@ -1,14 +1,10 @@
 package com.example.skyjar.dormitoryapp.CustomAdapters;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.skyjar.dormitoryapp.Entities.BillDetail;
@@ -21,9 +17,9 @@ public class BillDetailAdapter extends BaseAdapter {
     private int layout;
     private List<BillDetail> billDetails;
 
-    public BillDetailAdapter(Context context, int layout, List<BillDetail> billDetails) {
+
+    public BillDetailAdapter(Context context, List<BillDetail> billDetails) {
         this.context = context;
-        this.layout = layout;
         this.billDetails = billDetails;
     }
 
@@ -67,13 +63,9 @@ public class BillDetailAdapter extends BaseAdapter {
     }
 
     private class ViewHolder {
-        TextView txtMonth;
-        TextView txtRoom;
-        TextView txtAmount;
-        TextView txtApartment;
-        TextView txtStatus;
-        TextView txtDate;
-        Button btnDetail;
+        TextView txtServiceName;
+        TextView txtQuantity;
+        TextView txtPrice;
     }
 
     @Override
@@ -82,34 +74,22 @@ public class BillDetailAdapter extends BaseAdapter {
         if (convertView == null) {
             holder = new ViewHolder();
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(layout, null);
+            convertView = inflater.inflate(R.layout.row_service, null);
 
-            holder.txtMonth = convertView.findViewById(R.id.txtMonth);
-            holder.txtAmount = convertView.findViewById(R.id.txtAmount);
-            holder.txtRoom = convertView.findViewById(R.id.txtRoom);
-            holder.txtApartment = convertView.findViewById(R.id.txtApartment);
-            holder.txtStatus = convertView.findViewById(R.id.txtStatus);
-            holder.txtDate = convertView.findViewById(R.id.txtDate);
-            holder.btnDetail = convertView.findViewById(R.id.btnBillDetail);
+            holder.txtPrice = convertView.findViewById(R.id.txtServicePrice);
+            holder.txtQuantity = convertView.findViewById(R.id.txtServiceQuantity);
+            holder.txtServiceName = convertView.findViewById(R.id.txtServiceName);
 
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        BillDetail bill = billDetails.get(position);
+        BillDetail service = billDetails.get(position);
 
-        holder.txtDate.setText(bill.getCreatedDate());
-        holder.txtStatus.setText(bill.getStatus());
-        if(bill.getStatus().contains("Đã"))
-            holder.txtStatus.setTextColor(Color.rgb(49, 183, 34));
-        else
-            holder.txtStatus.setTextColor(Color.rgb(255, 33, 33));
-        holder.txtRoom.setText(bill.getRoom());
-        holder.txtAmount.setText("Số tiền: " + bill.getAmount() + " đồng");
-        holder.txtApartment.setText(bill.getApartment());
-        holder.txtMonth.setText(bill.getMonth());
-        holder.btnDetail.setId(bill.getId());
+        holder.txtServiceName.setText(service.getName());
+        holder.txtQuantity.setText(service.getQuantity() + "");
+        holder.txtPrice.setText(service.getPrice() + "");
 
         return convertView;
     }

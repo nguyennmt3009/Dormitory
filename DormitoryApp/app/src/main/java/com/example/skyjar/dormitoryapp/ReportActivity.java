@@ -1,10 +1,12 @@
 package com.example.skyjar.dormitoryapp;
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 
 
 import com.example.skyjar.dormitoryapp.CustomAdapters.ReportAdapter;
@@ -29,6 +31,15 @@ public class ReportActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.btnAddReport);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Toast.makeText(ReportActivity.this, "Plus click", Toast.LENGTH_SHORT).show();
             }
         });
 

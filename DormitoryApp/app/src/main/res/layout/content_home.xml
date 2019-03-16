@@ -11,9 +11,10 @@
 
 
     <TextView
+        android:id="@+id/txtWelcome"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:text="Xin chào, Nguyễn Văn Dâu"
+        android:text="Xin chào"
         android:gravity="center"
         android:textColor="#FFF"
         android:background="@drawable/homeheader"
@@ -41,8 +42,18 @@
             android:src="@drawable/ic_tune_black_24dp"
             android:layout_marginRight="20dp"
             android:layout_weight="1"
+            android:onClick="clickToSortBill"
             />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/txtStatusNull"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:gravity="center"
+        android:text="Đã thanh toán tất cả hóa đơn!"
+        />
 
     <ListView
         android:layout_width="match_parent"
