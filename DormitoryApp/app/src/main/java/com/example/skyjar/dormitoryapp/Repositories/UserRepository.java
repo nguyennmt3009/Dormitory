@@ -37,14 +37,14 @@ public class UserRepository {
                             if(user != null){
                                 callBackData.onSuccess(user);
                             }else {
-                                callBackData.onFail("No data!");
+                                callBackData.onFail("No data!!");
                             }
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
                     }
                 }else {
-                    callBackData.onFail("No data");
+                    callBackData.onFail("No data!!!");
                 }
             }
 

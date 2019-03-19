@@ -12,7 +12,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +34,8 @@ public class HomeActivity extends AppCompatActivity
     TextView txtWelcome;
     TextView txtStatusNull;
     User currentUser = null;
+    RadioGroup rdGroup;
+
 
 
     @Override
@@ -39,8 +44,11 @@ public class HomeActivity extends AppCompatActivity
         setContentView(R.layout.activity_home);
         setTitle("Trang Chủ");
 
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
 
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
@@ -116,6 +124,7 @@ public class HomeActivity extends AppCompatActivity
         for (Bill b : listBills) {
             if (b.getId() == index){
                 bundle.putSerializable("BillDetail", b);
+                bundle.putSerializable("CurrentUser", currentUser);
                 f = true;
             }
         }
@@ -195,28 +204,81 @@ public class HomeActivity extends AppCompatActivity
         return true;
     }
 
+    Dialog dialog;
+
     public void clickToSortBill(View view) {
 
+        dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_info);
+
+        dialog.show();
+
+        TextView btnDismiss = dialog.findViewById(R.id.dlDismiss);
+        btnDismiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        Button btnFilter = dialog.findViewById(R.id.btnFilter);
+        rdGroup = dialog.findViewById(R.id.rdGroupPayment);
+
+        btnFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int checked = rdGroup.getCheckedRadioButtonId();
+                RadioButton chosenOne = dialog.findViewById(checked);
+
+                Toast.makeText(HomeActivity.this, chosenOne == null? "null" : chosenOne.getText(), Toast.LENGTH_SHORT).show();
+                if (chosenOne.getText().toString().contains("ã"))
+                    filter(1);
+                else if (chosenOne.getText().toString().contains("ưa"))
+                    filter(2);
+                else
+                    filter(3);
+
+                dialog.dismiss();
+            }
+        });
+
+    }
+
+    private void filter(int sortValue) {
+
+        String sortBy = "null";
 
 
-        // Popup
-//        txtStatusNull.setVisibility(View.GONE);
+        switch (sortValue) {
+            case 1:
+                sortBy = "status=true";
+                break;
+            case 2:
+                sortBy = "status=false";
+                break;
+            default:
+                break;
+        }
+
+        txtStatusNull.setVisibility(View.GONE);
 //
-//        BillRepository repository = new BillRepository();
-//        repository.getBills(this, "abc", currentUser.getId(), new CallBackData<List<Bill>>() {
-//            @Override
-//            public void onSuccess(List<Bill> billDetails) {
-//                Toast.makeText(HomeActivity.this, "Get data successful", Toast.LENGTH_SHORT).show();
-//                if (billDetails.size() == 0)
-//                    txtStatusNull.setVisibility(View.VISIBLE);
-//                else
-//                    buildLayout(billDetails);
-//            }
-//
-//            @Override
-//            public void onFail(String msg) {
-//                Toast.makeText(HomeActivity.this, "Get data failure: " + msg, Toast.LENGTH_SHORT).show();
-//            }
-//        });
+        BillRepository repository = new BillRepository();
+        repository.getBills(this, sortBy, currentUser.getId(), new CallBackData<List<Bill>>() {
+            @Override
+            public void onSuccess(List<Bill> billDetails) {
+                Toast.makeText(HomeActivity.this, "Get data successful", Toast.LENGTH_SHORT).show();
+                if (billDetails.size() == 0)
+                    txtStatusNull.setVisibility(View.VISIBLE);
+                else
+                    buildLayout(billDetails);
+            }
+
+            @Override
+            public void onFail(String msg) {
+                Toast.makeText(HomeActivity.this, "Get data failure: " + msg, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
     }
 }

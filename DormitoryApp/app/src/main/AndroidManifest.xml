@@ -26,7 +26,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ReportActivity" />
         <activity android:name=".BillDetailActivity" />
-        <activity android:name=".CreateReportActivity"></activity>
+        <activity android:name=".CreateReportActivity" />
+        <activity android:name=".PersonalActivity"></activity>
     </application>
 
 </manifest>

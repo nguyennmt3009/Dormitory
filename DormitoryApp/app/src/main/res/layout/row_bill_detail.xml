@@ -72,12 +72,16 @@
         </LinearLayout>
         <Button
             android:id="@+id/btnBillDetail"
-            android:layout_width="180dp"
+            android:layout_width="190dp"
             android:layout_height="40dp"
             android:layout_weight="1"
             android:layout_gravity="center_vertical"
+            android:textColor="#fff"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:text="Chi tiết"
             android:layout_marginRight="20dp"
-            android:background="@drawable/btndetail"
+            android:background="@drawable/btn_style"
             android:onClick="clickBillDetail"
             />
     </LinearLayout>

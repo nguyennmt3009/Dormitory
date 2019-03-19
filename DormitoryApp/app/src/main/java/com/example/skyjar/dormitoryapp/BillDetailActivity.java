@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.skyjar.dormitoryapp.CustomAdapters.BillDetailAdapter;
 import com.example.skyjar.dormitoryapp.Entities.Bill;
+import com.example.skyjar.dormitoryapp.Entities.User;
 import com.example.skyjar.dormitoryapp.Repositories.BillRepository;
 import com.example.skyjar.dormitoryapp.utilsService.CallBackData;
 
@@ -24,6 +25,7 @@ public class BillDetailActivity extends AppCompatActivity {
     TextView txtCreatedDate;
     TextView txtStatus;
     TextView txtAmount;
+    User currentUser = null;
     
 
     @Override
@@ -46,6 +48,12 @@ public class BillDetailActivity extends AppCompatActivity {
     private void initialView() {
         //Mapping
 
+        Intent intent = this.getIntent();
+        Bundle bundle = intent.getBundleExtra("Bundle");
+
+        User user = (User) bundle.getSerializable("CurrentUser");
+        currentUser = user;
+
         listView = findViewById(R.id.lstBrandService);
         txtCreatedDate = findViewById(R.id.txtBillDate);
         txtId = findViewById(R.id.txtBillId);
@@ -53,8 +61,6 @@ public class BillDetailActivity extends AppCompatActivity {
         txtStatus = findViewById(R.id.txtBillStatus);
         
         //Call Data
-        Intent intent = this.getIntent();
-        Bundle bundle = intent.getBundleExtra("Bundle");
         billDetail = (Bill) bundle.getSerializable("BillDetail");
 
         buildLayout(billDetail);
@@ -77,11 +83,16 @@ public class BillDetailActivity extends AppCompatActivity {
     public void clickToPay(View view) {
 
         BillRepository repository = new BillRepository();
-        repository.paymentBill(1, 5, new CallBackData<String>() {
+        repository.paymentBill(currentUser.getId(), billDetail.getId(), new CallBackData<String>() {
             @Override
             public void onSuccess(String s) {
                 Toast.makeText(BillDetailActivity.this, "Success", Toast.LENGTH_SHORT).show();
-                finish();
+
+                Intent intent = new Intent(BillDetailActivity.this, HomeActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("CurrentUser", currentUser);
+                intent.putExtra("Bundle", bundle);
+                startActivity(intent);
             }
 
             @Override

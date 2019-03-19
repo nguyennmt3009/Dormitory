@@ -28,6 +28,12 @@
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -36,8 +42,8 @@
         android:id="@+id/spnApartment"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="#114ce2"
-        android:padding="5dp" />
+        android:backgroundTint="#02584c"
+        android:padding="10dp" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -46,8 +52,8 @@
         android:id="@+id/spnRoom"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="#114ce2"
-        android:padding="5dp" />
+        android:backgroundTint="#02584c"
+        android:padding="10dp" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -56,8 +62,8 @@
         android:id="@+id/spnService"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="#114ce2"
-        android:padding="5dp" />
+        android:backgroundTint="#02584c"
+        android:padding="10dp" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -66,21 +72,27 @@
         android:id="@+id/spnServiceItem"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="#114ce2"
-        android:padding="5dp" />
+        android:backgroundTint="#02584c"
+        android:padding="10dp" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Mô tả sự cố"/>
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="wrap_content"
         android:id="@+id/edtDescription"/>
     <Button
+        android:layout_marginTop="30dp"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="Gửi báo cáo"
+        android:textColor="#fff"
+        android:textStyle="bold"
+        android:textAllCaps="false"
+        android:background="@drawable/btn_style"
         android:id="@+id/btnSendReport"
         android:onClick="clickToSendReport"/>
+    </LinearLayout>
 </LinearLayout>
