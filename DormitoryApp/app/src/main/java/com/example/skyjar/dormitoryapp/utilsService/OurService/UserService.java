@@ -4,6 +4,7 @@ import com.example.skyjar.dormitoryapp.utilsService.ConfigApi;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -21,4 +22,7 @@ public interface UserService {
     @GET(ConfigApi.GET_USER_DETAIL)
     Call<ResponseBody> getUserDetail(@Header("Authorization") String auth);
 
+
+    @POST(ConfigApi.CHANGE_PASSWORD)
+    Call<ResponseBody> changePassword(@Body String currentPassword, @Body String newPassword);
 }

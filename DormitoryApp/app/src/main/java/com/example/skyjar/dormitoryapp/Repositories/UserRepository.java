@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
+import java.io.ObjectInput;
 import java.lang.reflect.Type;
 
 import okhttp3.ResponseBody;
@@ -80,6 +81,33 @@ public class UserRepository {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
+                    }
+                }else {
+                    callBackData.onFail("No data");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
+
+    public void changePassword(String currentPassword, String newPassword, final CallBackData<Object> callBackData) {
+        ClientApi clientApi = new ClientApi();
+
+        Call<ResponseBody> serviceCall= clientApi.userService().changePassword(currentPassword, newPassword);
+
+        serviceCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response!=null && response.body() != null){
+                    if(response.code()==200){
+                        callBackData.onSuccess("Success");
+                    } else {
+                        callBackData.onFail("No data!");
                     }
                 }else {
                     callBackData.onFail("No data");
