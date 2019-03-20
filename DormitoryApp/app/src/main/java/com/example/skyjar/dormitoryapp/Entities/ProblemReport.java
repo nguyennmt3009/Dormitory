@@ -2,72 +2,106 @@ package com.example.skyjar.dormitoryapp.Entities;
 
 import android.media.Image;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 public class ProblemReport implements Serializable {
-    private String location;
-    private String problemType;
-    private String content;
-    private boolean status;
-    private Date createdDate;
-    private List<Image> images;
+    private int apartmentId;
+    private  String apartmentName;
+    private String roomName;
+    private String serviceName;
+    private String serviceItemName;
+    private String description;
+    @SerializedName("createdDate")
+    private String createDate;
+    private int status;
+    private String statusName;
 
-    public ProblemReport(String location, String problemType, String content, boolean status, Date createdDate, List<Image> images) {
-        this.location = location;
-        this.problemType = problemType;
-        this.content = content;
-        this.status = status;
-        this.createdDate = createdDate;
-        this.images = images;
+    public int getApartmentId() {
+        return apartmentId;
     }
 
-    public Date getCreatedDate() {
-        return createdDate;
+    public void setApartmentId(int apartmentId) {
+        this.apartmentId = apartmentId;
     }
 
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
+    public String getApartmentName() {
+        return apartmentName;
     }
 
-    public List<Image> getImages() {
-        return images;
+    public void setApartmentName(String apartmentName) {
+        this.apartmentName = apartmentName;
     }
 
-    public void setImages(List<Image> images) {
-        this.images = images;
+    public String getRoomName() {
+        return roomName;
     }
 
-    public String getLocation() {
-        return location;
+    public void setRoomName(String roomName) {
+        this.roomName = roomName;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public String getServiceName() {
+        return serviceName;
     }
 
-    public String getProblemType() {
-        return problemType;
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
     }
 
-    public void setProblemType(String problemType) {
-        this.problemType = problemType;
+    public String getServiceItemName() {
+        return serviceItemName;
     }
 
-    public String getContent() {
-        return content;
+    public void setServiceItemName(String serviceItemName) {
+        this.serviceItemName = serviceItemName;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public String getDescription() {
+        return description;
     }
 
-    public boolean isStatus() {
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
+    }
+
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(int status) {
         this.status = status;
+    }
+
+    public String getStatusName() {
+        return statusName;
+    }
+
+    public void setStatusName(String statusName) {
+        this.statusName = statusName;
+    }
+
+    public ProblemReport(int apartmentId, String apartmentName, String roomName, String serviceName, String serviceItemName, String description, String createDate, int status, String statusName) {
+
+        this.apartmentId = apartmentId;
+        this.apartmentName = apartmentName;
+        this.roomName = roomName;
+        this.serviceName = serviceName;
+        this.serviceItemName = serviceItemName;
+        this.description = description;
+        this.createDate = createDate;
+        this.status = status;
+        this.statusName = statusName;
     }
 }
