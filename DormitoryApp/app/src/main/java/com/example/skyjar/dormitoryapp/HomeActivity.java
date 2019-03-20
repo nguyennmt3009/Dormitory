@@ -174,6 +174,7 @@ public class HomeActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         Intent intent;
+        Bundle bundle;
 
         if (id == R.id.nav_home) {
 
@@ -186,14 +187,18 @@ public class HomeActivity extends AppCompatActivity
             intent = new Intent(this, ReportActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_personal) {
-
+            intent = new Intent(this, PersonalActivity.class);
+            bundle = new Bundle();
+            bundle.putSerializable("CurrentUser", currentUser);
+            intent.putExtra("Bundle", bundle);
+            startActivity(intent);
         } else if (id == R.id.nav_account) {
 
         } else if (id == R.id.nav_change_password) {
 
         } else if (id == R.id.nav_logout) {
             intent = new Intent(this, MainActivity.class);
-            Bundle bundle = new Bundle();
+            bundle = new Bundle();
             bundle.putInt("Logout", 1);
             intent.putExtra("Bundle", bundle);
             startActivity(intent);
