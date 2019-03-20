@@ -181,13 +181,13 @@ public class HomeActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_report) {
             intent = new Intent(HomeActivity.this, ReportActivity.class);
-            Bundle bundle = new Bundle();
+            bundle = new Bundle();
             bundle.putSerializable("CurrentUser", currentUser);
             intent.putExtra("Bundle", bundle);
             startActivity(intent);
         } else if (id == R.id.nav_contract) {
             intent = new Intent(HomeActivity.this, ContractListActivity.class);
-            Bundle bundle = new Bundle();
+            bundle = new Bundle();
             bundle.putSerializable("CurrentUser", currentUser);
             intent.putExtra("Bundle", bundle);
             startActivity(intent);
