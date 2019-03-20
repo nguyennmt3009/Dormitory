@@ -81,7 +81,7 @@ public class CreateReportActivity extends AppCompatActivity implements AdapterVi
         for (int i = 0; i < apartmentList.size(); i++) {
             listApartment.add(apartmentList.get(i).getName());
         }
-        listApartment.add("tesst");
+//        listApartment.add("tesst");
 //        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
 //                android.R.layout.simple_spinner_item, listApartment);
 //        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

@@ -9,31 +9,21 @@ import java.util.Date;
 import java.util.List;
 
 public class ProblemReport implements Serializable {
-    private int apartmentId;
-    private  String apartmentName;
+    private  Apartment apartment;
     private String roomName;
     private String serviceName;
     private String serviceItemName;
     private String description;
     @SerializedName("createdDate")
     private String createDate;
-    private int status;
-    private String statusName;
+    private ReportStatus status;
 
-    public int getApartmentId() {
-        return apartmentId;
+    public Apartment getApartment() {
+        return apartment;
     }
 
-    public void setApartmentId(int apartmentId) {
-        this.apartmentId = apartmentId;
-    }
-
-    public String getApartmentName() {
-        return apartmentName;
-    }
-
-    public void setApartmentName(String apartmentName) {
-        this.apartmentName = apartmentName;
+    public void setApartment(Apartment apartment) {
+        this.apartment = apartment;
     }
 
     public String getRoomName() {
@@ -76,32 +66,26 @@ public class ProblemReport implements Serializable {
         this.createDate = createDate;
     }
 
-    public int getStatus() {
+    public ReportStatus getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(ReportStatus status) {
         this.status = status;
     }
 
-    public String getStatusName() {
-        return statusName;
+    public ProblemReport() {
+
     }
 
-    public void setStatusName(String statusName) {
-        this.statusName = statusName;
-    }
+    public ProblemReport(Apartment apartment, String roomName, String serviceName, String serviceItemName, String description, String createDate, ReportStatus status) {
 
-    public ProblemReport(int apartmentId, String apartmentName, String roomName, String serviceName, String serviceItemName, String description, String createDate, int status, String statusName) {
-
-        this.apartmentId = apartmentId;
-        this.apartmentName = apartmentName;
+        this.apartment = apartment;
         this.roomName = roomName;
         this.serviceName = serviceName;
         this.serviceItemName = serviceItemName;
         this.description = description;
         this.createDate = createDate;
         this.status = status;
-        this.statusName = statusName;
     }
 }

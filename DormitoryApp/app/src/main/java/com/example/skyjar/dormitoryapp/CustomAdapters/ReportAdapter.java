@@ -12,13 +12,15 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 
+import com.example.skyjar.dormitoryapp.Entities.Apartment;
 import com.example.skyjar.dormitoryapp.Entities.ProblemReport;
+import com.example.skyjar.dormitoryapp.Entities.ReportStatus;
 import com.example.skyjar.dormitoryapp.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReportAdapter extends BaseAdapter implements Filterable {
+public class ReportAdapter extends BaseAdapter {
     private Context context;
     private int layout;
     private List<ProblemReport> problemReports;
@@ -27,45 +29,6 @@ public class ReportAdapter extends BaseAdapter implements Filterable {
         this.context = context;
         this.layout = layout;
         this.problemReports = problemReports;
-    }
-
-    @Override
-    public Filter getFilter() {
-        Filter filter = new Filter() {
-
-            @SuppressWarnings("unchecked")
-            @Override
-            protected void publishResults(CharSequence constraint, FilterResults results) {
-
-                List<String> arrayListNames = (List<String>) results.values;
-                notifyDataSetChanged();
-            }
-
-            @Override
-            protected FilterResults performFiltering(CharSequence constraint) {
-
-                FilterResults results = new FilterResults();
-                List<ProblemReport> FilteredArrayNames = new ArrayList<>();
-
-                // perform your search here using the searchConstraint String.
-
-                constraint = constraint.toString().toLowerCase();
-                for (int i = 0; i < problemReports.size(); i++) {
-                    String dataNames = problemReports.get(i).getStatusName();
-                    if (dataNames.toLowerCase().equalsIgnoreCase(constraint.toString()))  {
-                        FilteredArrayNames.add(problemReports.get(i));
-                    }
-                }
-
-                results.count = FilteredArrayNames.size();
-                results.values = FilteredArrayNames;
-                Log.e("VALUES", results.values.toString());
-
-                return results;
-            }
-        };
-
-        return filter;
     }
 
     private class ViewHolder {
@@ -101,41 +64,43 @@ public class ReportAdapter extends BaseAdapter implements Filterable {
 
         holder.txtRoom.setText("Phòng " + problemReport.getRoomName());
         holder.txtCreateDate.setText("Ngày tạo: " + problemReport.getCreateDate());
+        int statusId = problemReport.getStatus().getId();
+        String statusName = problemReport.getStatus().getName();
 
-        switch (problemReport.getStatus()) {
+        switch (statusId) {
             case 1:
-                holder.txtStatus.setText(problemReport.getStatusName());
+                holder.txtStatus.setText(statusName);
                 holder.txtStatus.setTextColor(Color.parseColor("#f39c12"));
                 break;
             case 2:
-                holder.txtStatus.setText(problemReport.getStatusName());
+                holder.txtStatus.setText(statusName);
                 holder.txtStatus.setTextColor(Color.parseColor("#f39c12"));
                 break;
             case 3:
-                holder.txtStatus.setText(problemReport.getStatusName());
+                holder.txtStatus.setText(statusName);
                 holder.txtStatus.setTextColor(Color.parseColor("#00a65a"));
                 break;
             case 7:
-                holder.txtStatus.setText(problemReport.getStatusName());
+                holder.txtStatus.setText(statusName);
                 holder.txtStatus.setTextColor(Color.parseColor("#00a65a"));
                 break;
             case 4:
-                holder.txtStatus.setText(problemReport.getStatusName());
+                holder.txtStatus.setText(statusName);
                 holder.txtStatus.setTextColor(Color.parseColor("#dd4b39"));
                 break;
             case 6:
-                holder.txtStatus.setText(problemReport.getStatusName());
+                holder.txtStatus.setText(statusName);
                 holder.txtStatus.setTextColor(Color.parseColor("#dd4b39"));
                 break;
             case 5:
-                holder.txtStatus.setText(problemReport.getStatusName());
+                holder.txtStatus.setText(statusName);
                 holder.txtStatus.setTextColor(Color.parseColor("#b5b5b5"));
                 break;
             default:
                     break;
         }
 
-        holder.txtApartment.setText(problemReport.getApartmentName());
+        holder.txtApartment.setText(problemReport.getApartment().getName());
         if (problemReport.getDescription().length() > 30)
             holder.txtDesciption.setText("Hiện tượng: " + problemReport.getDescription().substring(0, 25).toString() + "...");
         else
