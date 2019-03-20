@@ -47,12 +47,12 @@ public class CreateReportActivity extends AppCompatActivity implements AdapterVi
                 finish();
             }
         });
-        addItemsOnSpinner();
+        initView();
         spnApartment.setOnItemSelectedListener(this);
 
     }
 
-    public void addItemsOnSpinner() {
+    public void initView() {
         spnApartment = (Spinner) findViewById(R.id.spnApartment);
         spnRoom = (Spinner) findViewById(R.id.spnRoom);
         spnService = (Spinner) findViewById(R.id.spnService);
@@ -104,19 +104,7 @@ public class CreateReportActivity extends AppCompatActivity implements AdapterVi
             case R.id.spnApartment:
                 // Do stuff for spinner1
                 showToast("Spinner1: position=" + position + ", Value= " + parent.getItemAtPosition(position));
-//                if (position == 1) {
-//                    listService.add("service test");
-//                    listRoom.add("room test");
-//                } else {
-//                    roomList = apartmentList.get(position).getRooms();
-//                    for (int i = 0; i < roomList.size(); i++) {
-//                        listRoom.add(roomList.get(i).getName());
-//                    }
-//                    serviceList = apartmentList.get(position).getServices();
-//                    for (int i = 0; i < serviceList.size(); i++) {
-//                        listService.add(serviceList.get(i).getName());
-//                    }
-//                }
+
                 roomList = apartmentList.get(position).getRooms();
                 serviceList = apartmentList.get(position).getServices();
                 ArrayAdapter<Room> dataAdapter1 = new ArrayAdapter<Room>(parent.getContext(),
@@ -135,14 +123,7 @@ public class CreateReportActivity extends AppCompatActivity implements AdapterVi
 //                        final List<String> listServiceItem = new ArrayList<String>();
                         List<ServiceItem> serviceItemList = serviceList.get(position).getServiceItems();
                         showToast("In switch-statement for spinner2. Value=" + parent.getItemAtPosition(position));
-//                        if (spnService.getSelectedItem().toString().equalsIgnoreCase("service test"))
-//                            listServiceItem.add("item test");
-//                        else {
-//                            serviceItemList = serviceList.get(position).getServiceItems();
-//                            for (int i = 0; i < serviceItemList.size(); i++) {
-//                                listServiceItem.add(serviceItemList.get(i).getServiceItemName());
-//                            }
-//                        }
+
                         ArrayAdapter<ServiceItem> dataAdapter3 = new ArrayAdapter<ServiceItem>(parent.getContext(),
                                 android.R.layout.simple_spinner_item, serviceItemList);
                         dataAdapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

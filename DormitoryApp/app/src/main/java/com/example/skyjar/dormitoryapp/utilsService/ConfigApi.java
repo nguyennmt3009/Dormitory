@@ -14,4 +14,10 @@ public class ConfigApi {
 
     // Report Problem
     public static final String GET_APARTMENT_REPORT = "mobile/report";
+
+    //User Contract
+    public static final String GET_CONTRACTS = "mobile/contract/all-contract";
+
+    //Report List
+    public static final String GET_REPORT_LIST = "mobile/report-list";
 }

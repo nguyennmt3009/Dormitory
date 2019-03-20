@@ -27,6 +27,8 @@
         <activity android:name=".ReportActivity" />
         <activity android:name=".BillDetailActivity" />
         <activity android:name=".CreateReportActivity" />
+        <activity android:name=".ContractListActivity" />
+        <activity android:name=".ContractDetailActivity"></activity>
         <activity android:name=".PersonalActivity"></activity>
     </application>
 

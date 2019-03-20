@@ -49,7 +49,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void clickToLogin(View view) {
-
+//        Intent intent = new Intent(this, HomeActivity.class);
+//        startActivity(intent);
         userRepository = new UserRepository();
         userRepository.login(txtUsername.getText().toString(), txtPassword.getText().toString(),
                 new CallBackData<LoginResponse>() {
