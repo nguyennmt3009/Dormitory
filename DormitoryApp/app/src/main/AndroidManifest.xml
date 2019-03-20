@@ -27,7 +27,8 @@
         <activity android:name=".ReportActivity" />
         <activity android:name=".BillDetailActivity" />
         <activity android:name=".CreateReportActivity" />
-        <activity android:name=".PersonalActivity"></activity>
+        <activity android:name=".PersonalActivity" />
+        <activity android:name=".ChangePasswordActivity"></activity>
     </application>
 
 </manifest>
