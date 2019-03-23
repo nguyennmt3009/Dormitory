@@ -13,9 +13,11 @@ public interface ReportService {
     @GET(ConfigApi.GET_APARTMENT_REPORT + "/{id}")
     Call<ResponseBody> getApartmentReport(@Path("id") int customerId);
 
-
     @POST(ConfigApi.GET_APARTMENT_REPORT)
     Call<String> createReport(@Query("roomId") int roomId,
                               @Query("serviceItemId") int serviceItemId,
                               @Query("description") String description);
+
+    @GET(ConfigApi.GET_REPORT_LIST + "/{customerId}")
+    Call<ResponseBody> getReportList(@Path("customerId") int customerId);
 }

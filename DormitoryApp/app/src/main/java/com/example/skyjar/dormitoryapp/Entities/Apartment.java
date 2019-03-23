@@ -1,5 +1,7 @@
 package com.example.skyjar.dormitoryapp.Entities;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -14,6 +16,9 @@ public class Apartment implements Serializable {
         this.name = name;
         this.rooms = rooms;
         this.services = services;
+    }
+
+    public Apartment() {
     }
 
     public int getId() {
@@ -52,5 +57,8 @@ public class Apartment implements Serializable {
     @Override
     public String toString() {
         return this.name;
+    }
+
+    public static class ReportStatus {
     }
 }

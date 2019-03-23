@@ -12,11 +12,16 @@ public class ConfigApi {
     // User Login
     public static final String LOGIN = "token";
     public static final String GET_USER_DETAIL = "account/current-customer";
-    public static final String CHANGE_PASSWORD = "account/change-password";
 
     // Report Problem
     public static final String GET_APARTMENT_REPORT = "mobile/report";
 
     //Transaction
     public static final String GET_CUSTOMER_ACCOUNT = "customer";
+
+    //User Contract
+    public static final String GET_CONTRACTS = "mobile/contract/all-contract";
+
+    //Report List
+    public static final String GET_REPORT_LIST = "mobile/report-list";
 }

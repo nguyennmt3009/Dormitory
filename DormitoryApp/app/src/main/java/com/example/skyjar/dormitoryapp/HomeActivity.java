@@ -84,8 +84,7 @@ public class HomeActivity extends AppCompatActivity
 
 
     private void initialView(){
-        Intent intent = this.getIntent();
-        Bundle bundle = intent.getBundleExtra("Bundle");
+        Bundle bundle = getIntent().getBundleExtra("Bundle");
 
         User user = (User) bundle.getSerializable("CurrentUser");
         currentUser = user;
@@ -190,10 +189,16 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.nav_history) {
 
         } else if (id == R.id.nav_report) {
-            intent = new Intent(this, CreateReportActivity.class);
+            intent = new Intent(HomeActivity.this, ReportActivity.class);
+            bundle = new Bundle();
+            bundle.putSerializable("CurrentUser", currentUser);
+            intent.putExtra("Bundle", bundle);
             startActivity(intent);
         } else if (id == R.id.nav_contract) {
-            intent = new Intent(this, ReportActivity.class);
+            intent = new Intent(HomeActivity.this, ContractListActivity.class);
+            bundle = new Bundle();
+            bundle.putSerializable("CurrentUser", currentUser);
+            intent.putExtra("Bundle", bundle);
             startActivity(intent);
         } else if (id == R.id.nav_personal) {
             intent = new Intent(this, PersonalActivity.class);

@@ -2,72 +2,90 @@ package com.example.skyjar.dormitoryapp.Entities;
 
 import android.media.Image;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 public class ProblemReport implements Serializable {
-    private String location;
-    private String problemType;
-    private String content;
-    private boolean status;
-    private Date createdDate;
-    private List<Image> images;
+    private  Apartment apartment;
+    private String roomName;
+    private String serviceName;
+    private String serviceItemName;
+    private String description;
+    @SerializedName("createdDate")
+    private String createDate;
+    private ReportStatus status;
 
-    public ProblemReport(String location, String problemType, String content, boolean status, Date createdDate, List<Image> images) {
-        this.location = location;
-        this.problemType = problemType;
-        this.content = content;
-        this.status = status;
-        this.createdDate = createdDate;
-        this.images = images;
+    public Apartment getApartment() {
+        return apartment;
     }
 
-    public Date getCreatedDate() {
-        return createdDate;
+    public void setApartment(Apartment apartment) {
+        this.apartment = apartment;
     }
 
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
+    public String getRoomName() {
+        return roomName;
     }
 
-    public List<Image> getImages() {
-        return images;
+    public void setRoomName(String roomName) {
+        this.roomName = roomName;
     }
 
-    public void setImages(List<Image> images) {
-        this.images = images;
+    public String getServiceName() {
+        return serviceName;
     }
 
-    public String getLocation() {
-        return location;
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public String getServiceItemName() {
+        return serviceItemName;
     }
 
-    public String getProblemType() {
-        return problemType;
+    public void setServiceItemName(String serviceItemName) {
+        this.serviceItemName = serviceItemName;
     }
 
-    public void setProblemType(String problemType) {
-        this.problemType = problemType;
+    public String getDescription() {
+        return description;
     }
 
-    public String getContent() {
-        return content;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public String getCreateDate() {
+        return createDate;
     }
 
-    public boolean isStatus() {
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
+    }
+
+    public ReportStatus getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(ReportStatus status) {
+        this.status = status;
+    }
+
+    public ProblemReport() {
+
+    }
+
+    public ProblemReport(Apartment apartment, String roomName, String serviceName, String serviceItemName, String description, String createDate, ReportStatus status) {
+
+        this.apartment = apartment;
+        this.roomName = roomName;
+        this.serviceName = serviceName;
+        this.serviceItemName = serviceItemName;
+        this.description = description;
+        this.createDate = createDate;
         this.status = status;
     }
 }
