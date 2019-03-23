@@ -1,7 +1,7 @@
 package com.example.skyjar.dormitoryapp.Repositories;
 
 import com.example.skyjar.dormitoryapp.Entities.LoginEntites.LoginResponse;
-import com.example.skyjar.dormitoryapp.Entities.LoginEntites.UserLogin;
+import com.example.skyjar.dormitoryapp.Entities.LoginEntites.Password;
 import com.example.skyjar.dormitoryapp.Entities.User;
 import com.example.skyjar.dormitoryapp.utilsService.CallBackData;
 import com.example.skyjar.dormitoryapp.utilsService.ClientApi;
@@ -9,7 +9,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
-import java.io.ObjectInput;
 import java.lang.reflect.Type;
 
 import okhttp3.ResponseBody;
@@ -95,10 +94,10 @@ public class UserRepository {
     }
 
 
-    public void changePassword(String currentPassword, String newPassword, final CallBackData<Object> callBackData) {
+    public void changePassword(String auth, Password password, final CallBackData<Object> callBackData) {
         ClientApi clientApi = new ClientApi();
 
-        Call<ResponseBody> serviceCall= clientApi.userService().changePassword(currentPassword, newPassword);
+        Call<ResponseBody> serviceCall= clientApi.userService().changePassword(auth, password);
 
         serviceCall.enqueue(new Callback<ResponseBody>() {
             @Override

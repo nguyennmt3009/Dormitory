@@ -6,8 +6,12 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.skyjar.dormitoryapp.Entities.ResponseUniType;
 import com.example.skyjar.dormitoryapp.Entities.User;
+import com.example.skyjar.dormitoryapp.Repositories.TransactionRepository;
+import com.example.skyjar.dormitoryapp.utilsService.CallBackData;
 
 public class PersonalActivity extends AppCompatActivity {
     TextView txtFullname;
@@ -15,6 +19,7 @@ public class PersonalActivity extends AppCompatActivity {
     TextView txtPhone;
     TextView txtEmail;
     TextView txtSex;
+    TextView txtAccountAmount;
     User currentUser = null;
     Toolbar toolbar;
 
@@ -37,6 +42,7 @@ public class PersonalActivity extends AppCompatActivity {
         txtPhone = findViewById(R.id.txtPhone);
         txtEmail = findViewById(R.id.txtEmail);
         txtBirthdate = findViewById(R.id.txtBirthdate);
+        txtAccountAmount = findViewById(R.id.txtAccountAmount);
 
         Intent intent = this.getIntent();
         Bundle bundle = intent.getBundleExtra("Bundle");
@@ -49,5 +55,20 @@ public class PersonalActivity extends AppCompatActivity {
         txtEmail.setText(user.getEmail());
         txtPhone.setText(user.getPhone());
         txtSex.setText(user.getSex());
+        
+
+        TransactionRepository repository = new TransactionRepository();
+        repository.getAccountAmount(this, currentUser.getId(), new CallBackData<ResponseUniType>() {
+            @Override
+            public void onSuccess(ResponseUniType responseUniType) {
+                txtAccountAmount.setText(responseUniType.getData().getAccountItem().getAmount() + " đồng");
+            }
+
+            @Override
+            public void onFail(String msg) {
+                Toast.makeText(PersonalActivity.this, "Fail", Toast.LENGTH_SHORT).show();
+            }
+        });
+        
     }
 }

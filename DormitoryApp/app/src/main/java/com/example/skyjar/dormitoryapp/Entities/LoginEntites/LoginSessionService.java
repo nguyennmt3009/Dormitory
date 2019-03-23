@@ -17,6 +17,7 @@ public class LoginSessionService extends SQLiteOpenHelper {
     public static final String COLNAME4 = "phone";
     public static final String COLNAME5 = "birthdate";
     public static final String COLNAME6 = "id";
+    public static final String COLNAME7 = "token";
 
 
     public LoginSessionService(Context context) {
@@ -26,7 +27,7 @@ public class LoginSessionService extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String sql = "CREATE TABLE " + TABLE_NAME + " (fullname TEXT, email TEXT, sex TEXT, phone TEXT, " +
-                "birthdate TEXT, id INTERGER)";
+                "birthdate TEXT, id INTERGER, token TEXT)";
         db.execSQL(sql);
 
     }
@@ -48,6 +49,7 @@ public class LoginSessionService extends SQLiteOpenHelper {
         contentValues.put(COLNAME4, user.getPhone());
         contentValues.put(COLNAME5, user.getBirthdate());
         contentValues.put(COLNAME6, user.getId());
+        contentValues.put(COLNAME7, user.getToken());
 
         long result = db.insert(TABLE_NAME, null, contentValues);
         db.close();
@@ -55,15 +57,15 @@ public class LoginSessionService extends SQLiteOpenHelper {
         return true;
     }
 
-    public int getUserId() {
+    public String getToken() {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor res = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
 
-        int userId = -1;
+        String token = null;
         if(res.moveToNext())
-            userId = res.getInt(5);
+            token = res.getString(6);
         db.close();
-        return userId;
+        return token;
     }
 
     public User getUserInfo() {
@@ -79,6 +81,7 @@ public class LoginSessionService extends SQLiteOpenHelper {
             user.setPhone(res.getString(3));
             user.setBirthdate(res.getString(4));
             user.setId(res.getInt(5));
+            user.setToken(res.getString(6));
         }
         db.close();
         return user;

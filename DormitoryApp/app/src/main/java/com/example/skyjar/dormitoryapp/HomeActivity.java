@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -35,7 +36,8 @@ public class HomeActivity extends AppCompatActivity
     TextView txtStatusNull;
     User currentUser = null;
     RadioGroup rdGroup;
-
+    TextView txtUserMenu;
+    ProgressBar progressBar;
 
 
     @Override
@@ -71,9 +73,14 @@ public class HomeActivity extends AppCompatActivity
 
         txtWelcome = findViewById(R.id.txtWelcome);
         txtStatusNull = findViewById(R.id.txtStatusNull);
+        txtUserMenu = findViewById(R.id.txtMenuTitle);
+        progressBar = findViewById(R.id.progressBar);
 
         initialView();
+
     }
+
+
 
 
     private void initialView(){
@@ -89,7 +96,6 @@ public class HomeActivity extends AppCompatActivity
         repository.getBills(this, "status=false", user.getId(), new CallBackData<List<Bill>>() {
             @Override
             public void onSuccess(List<Bill> billDetails) {
-                Toast.makeText(HomeActivity.this, "Get data successful", Toast.LENGTH_SHORT).show();
                 if (billDetails.size() == 0)
                     txtStatusNull.setVisibility(View.VISIBLE);
                 else
@@ -114,6 +120,8 @@ public class HomeActivity extends AppCompatActivity
         billDetailAdapter = new BillAdapter(this, R.layout.row_bill_detail, listBills);
 
         listView.setAdapter(billDetailAdapter);
+        progressBar.setVisibility(View.GONE);
+
     }
 
     public void clickBillDetail(View view) {
@@ -142,7 +150,7 @@ public class HomeActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+//            super.onBackPressed();
         }
     }
 
@@ -196,7 +204,11 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.nav_account) {
 
         } else if (id == R.id.nav_change_password) {
-
+            intent = new Intent(this, ChangePasswordActivity.class);
+            bundle = new Bundle();
+            bundle.putSerializable("CurrentUser", currentUser);
+            intent.putExtra("Bundle", bundle);
+            startActivity(intent);
         } else if (id == R.id.nav_logout) {
             intent = new Intent(this, MainActivity.class);
             bundle = new Bundle();
@@ -213,7 +225,6 @@ public class HomeActivity extends AppCompatActivity
     Dialog dialog;
 
     public void clickToSortBill(View view) {
-
         dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_info);
 
@@ -236,7 +247,6 @@ public class HomeActivity extends AppCompatActivity
                 int checked = rdGroup.getCheckedRadioButtonId();
                 RadioButton chosenOne = dialog.findViewById(checked);
 
-                Toast.makeText(HomeActivity.this, chosenOne == null? "null" : chosenOne.getText(), Toast.LENGTH_SHORT).show();
                 if (chosenOne.getText().toString().contains("ã"))
                     filter(1);
                 else if (chosenOne.getText().toString().contains("ưa"))
@@ -251,7 +261,7 @@ public class HomeActivity extends AppCompatActivity
     }
 
     private void filter(int sortValue) {
-
+        progressBar.setVisibility(View.VISIBLE);
         String sortBy = "null";
 
 
@@ -272,7 +282,6 @@ public class HomeActivity extends AppCompatActivity
         repository.getBills(this, sortBy, currentUser.getId(), new CallBackData<List<Bill>>() {
             @Override
             public void onSuccess(List<Bill> billDetails) {
-                Toast.makeText(HomeActivity.this, "Get data successful", Toast.LENGTH_SHORT).show();
                 if (billDetails.size() == 0)
                     txtStatusNull.setVisibility(View.VISIBLE);
                 else

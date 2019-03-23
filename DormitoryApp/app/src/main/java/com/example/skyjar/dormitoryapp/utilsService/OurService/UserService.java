@@ -1,5 +1,6 @@
 package com.example.skyjar.dormitoryapp.utilsService.OurService;
 
+import com.example.skyjar.dormitoryapp.Entities.LoginEntites.Password;
 import com.example.skyjar.dormitoryapp.utilsService.ConfigApi;
 
 import okhttp3.ResponseBody;
@@ -24,5 +25,5 @@ public interface UserService {
 
 
     @POST(ConfigApi.CHANGE_PASSWORD)
-    Call<ResponseBody> changePassword(@Body String currentPassword, @Body String newPassword);
+    Call<ResponseBody> changePassword(@Header("Authorization") String auth, @Body Password password);
 }

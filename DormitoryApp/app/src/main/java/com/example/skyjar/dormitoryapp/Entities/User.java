@@ -9,6 +9,7 @@ public class User implements Serializable {
     private String phone;
     private String birthdate;
     private int id;
+    private String token;
 
     public User () {}
 
@@ -19,6 +20,24 @@ public class User implements Serializable {
         this.phone = phone;
         this.birthdate = birthdate;
         this.id = id;
+    }
+
+    public User(String fullname, String email, String sex, String phone, String birthdate, int id, String token) {
+        this.fullname = fullname;
+        this.email = email;
+        this.sex = sex;
+        this.phone = phone;
+        this.birthdate = birthdate;
+        this.id = id;
+        this.token = token;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public String getFullname() {

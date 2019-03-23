@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.skyjar.dormitoryapp.Entities.LoginEntites.LoginResponse;
@@ -17,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     EditText txtUsername;
     EditText txtPassword;
     UserRepository userRepository;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +27,8 @@ public class MainActivity extends AppCompatActivity {
 
         txtUsername = findViewById(R.id.edtUsername);
         txtPassword = findViewById(R.id.edtPassword);
-
+        progressBar = findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.GONE);
 
         Intent intent = this.getIntent();
         Bundle bundle = intent.getBundleExtra("Bundle");
@@ -49,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void clickToLogin(View view) {
+        progressBar.setVisibility(View.VISIBLE);
 
         userRepository = new UserRepository();
         userRepository.login(txtUsername.getText().toString(), txtPassword.getText().toString(),
@@ -60,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFail(String msg) {
+                progressBar.setVisibility(View.GONE);
                 Toast.makeText(MainActivity.this, "Fail: " + msg, Toast.LENGTH_SHORT).show();
             }
         });
@@ -71,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         userRepository.getUserDetail(auth, new CallBackData<User>() {
             @Override
             public void onSuccess(User user) {
+                user.setToken(auth);
                 LoginSessionService loginSession = new LoginSessionService(MainActivity.this);
                 loginSession.insert(user);
 
