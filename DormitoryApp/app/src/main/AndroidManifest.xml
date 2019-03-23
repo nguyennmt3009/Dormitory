@@ -28,6 +28,8 @@
         <activity android:name=".BillDetailActivity" />
         <activity android:name=".CreateReportActivity" />
         <activity android:name=".PersonalActivity" />
+        <activity android:name=".ContractListActivity" />
+        <activity android:name=".ContractDetailActivity" />
         <activity android:name=".ChangePasswordActivity" />
         <activity android:name=".NotificationActivity"></activity>
     </application>
