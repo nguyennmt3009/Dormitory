@@ -51,11 +51,15 @@ public class MainActivity extends AppCompatActivity {
     public void clickToLogin(View view) {
 //        Intent intent = new Intent(this, HomeActivity.class);
 //        startActivity(intent);
+
         userRepository = new UserRepository();
+        String username =  txtUsername.getText().toString();
+        String passwrod =  txtPassword.getText().toString();
         userRepository.login(txtUsername.getText().toString(), txtPassword.getText().toString(),
                 new CallBackData<LoginResponse>() {
             @Override
             public void onSuccess(LoginResponse response) {
+                Toast.makeText(MainActivity.this, "cc", Toast.LENGTH_SHORT).show();
                 getUserDetail(response.getAccess_token());
             }
 

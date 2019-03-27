@@ -178,7 +178,11 @@ public class HomeActivity extends AppCompatActivity
         if (id == R.id.nav_home) {
 
         } else if (id == R.id.nav_history) {
-
+            intent = new Intent(HomeActivity.this, TransactionActivity.class);
+            bundle = new Bundle();
+            bundle.putSerializable("CurrentUser", currentUser);
+            intent.putExtra("Bundle", bundle);
+            startActivity(intent);
         } else if (id == R.id.nav_report) {
             intent = new Intent(HomeActivity.this, ReportActivity.class);
             bundle = new Bundle();

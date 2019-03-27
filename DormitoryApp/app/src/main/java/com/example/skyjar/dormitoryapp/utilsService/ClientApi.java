@@ -4,6 +4,7 @@ package com.example.skyjar.dormitoryapp.utilsService;
 import com.example.skyjar.dormitoryapp.utilsService.OurService.BillService;
 import com.example.skyjar.dormitoryapp.utilsService.OurService.ContractService;
 import com.example.skyjar.dormitoryapp.utilsService.OurService.ReportService;
+import com.example.skyjar.dormitoryapp.utilsService.OurService.TransactionService;
 import com.example.skyjar.dormitoryapp.utilsService.OurService.UserService;
 
 public class ClientApi extends BaseAPI {
@@ -22,5 +23,9 @@ public class ClientApi extends BaseAPI {
 
     public ContractService contractService() {
         return this.getService(ContractService.class, ConfigApi.BASE_URL);
+    }
+
+    public TransactionService transactionService(){
+        return this.getService(TransactionService.class, ConfigApi.BASE_URL);
     }
 }
