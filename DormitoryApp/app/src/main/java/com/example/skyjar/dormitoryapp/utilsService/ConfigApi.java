@@ -25,4 +25,7 @@ public class ConfigApi {
 
     //Report List
     public static final String GET_REPORT_LIST = "mobile/report-list";
+
+    //Transaction
+    public static final String GET_TRANSACTION_LIST = "transaction";
 }
