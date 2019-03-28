@@ -260,6 +260,13 @@ public class ReportActivity extends AppCompatActivity {
     }
     public void clickToCreateReport(View view) {
         Intent intent = new Intent(this, CreateReportActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("CurrentUser", currentUser);
+        intent.putExtra("Bundle", bundle);
+        startActivity(intent);intent = new Intent(this, CreateReportActivity.class);
+        bundle = new Bundle();
+        bundle.putSerializable("CurrentUser", currentUser);
+        intent.putExtra("Bundle", bundle);
         startActivity(intent);
     }
 }

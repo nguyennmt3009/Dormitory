@@ -95,8 +95,10 @@ public class HomeActivity extends AppCompatActivity
         repository.getBills(this, "status=false", user.getId(), new CallBackData<List<Bill>>() {
             @Override
             public void onSuccess(List<Bill> billDetails) {
-                if (billDetails.size() == 0)
+                if (billDetails.size() == 0){
                     txtStatusNull.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.GONE);
+                }
                 else
                     buildLayout(billDetails);
             }
@@ -149,7 +151,7 @@ public class HomeActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-//            super.onBackPressed();
+            onDestroy();
         }
     }
 
@@ -210,8 +212,6 @@ public class HomeActivity extends AppCompatActivity
             bundle.putSerializable("CurrentUser", currentUser);
             intent.putExtra("Bundle", bundle);
             startActivity(intent);
-        } else if (id == R.id.nav_account) {
-
         } else if (id == R.id.nav_change_password) {
             intent = new Intent(this, ChangePasswordActivity.class);
             bundle = new Bundle();
@@ -291,8 +291,10 @@ public class HomeActivity extends AppCompatActivity
         repository.getBills(this, sortBy, currentUser.getId(), new CallBackData<List<Bill>>() {
             @Override
             public void onSuccess(List<Bill> billDetails) {
-                if (billDetails.size() == 0)
+                if (billDetails.size() == 0){
                     txtStatusNull.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.GONE);
+                }
                 else
                     buildLayout(billDetails);
             }

@@ -14,6 +14,7 @@ import com.example.skyjar.dormitoryapp.Entities.Apartment;
 import com.example.skyjar.dormitoryapp.Entities.Room;
 import com.example.skyjar.dormitoryapp.Entities.Service;
 import com.example.skyjar.dormitoryapp.Entities.ServiceItem;
+import com.example.skyjar.dormitoryapp.Entities.User;
 import com.example.skyjar.dormitoryapp.Repositories.ReportRepository;
 import com.example.skyjar.dormitoryapp.utilsService.CallBackData;
 import com.example.skyjar.dormitoryapp.utilsService.ClientApi;
@@ -31,6 +32,7 @@ public class CreateReportActivity extends AppCompatActivity implements AdapterVi
     private EditText edtDescription;
     private List<Apartment> apartmentList = new ArrayList<>();
     Toolbar toolbar;
+    User currentUser = null;
 
     List<Room> roomList = new ArrayList<>();
     List<Service> serviceList = new ArrayList<>();
@@ -53,13 +55,17 @@ public class CreateReportActivity extends AppCompatActivity implements AdapterVi
     }
 
     public void initView() {
+        Bundle bundle = getIntent().getBundleExtra("Bundle");
+        User user = (User) bundle.getSerializable("CurrentUser");
+        currentUser = user;
+
         spnApartment = (Spinner) findViewById(R.id.spnApartment);
         spnRoom = (Spinner) findViewById(R.id.spnRoom);
         spnService = (Spinner) findViewById(R.id.spnService);
         spnServiceItem = (Spinner) findViewById(R.id.spnServiceItem);
 
         ReportRepository repository = new ReportRepository();
-        repository.getApartmentReport(this, 1, new CallBackData<List<Apartment>>() {
+        repository.getApartmentReport(this, user.getId(), new CallBackData<List<Apartment>>() {
             @Override
             public void onSuccess(List<Apartment> apartments) {
                 apartmentList = apartments;

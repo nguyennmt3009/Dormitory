@@ -29,10 +29,6 @@
                 android:icon="@drawable/ic_person_black_24dp"
                 android:title="Thông tin cá nhân" />
             <item
-                android:id="@+id/nav_account"
-                android:icon="@drawable/ic_account_balance_black_24dp"
-                android:title="Tài khoản" />
-            <item
                 android:id="@+id/nav_change_password"
                 android:icon="@drawable/ic_lock_outline_black_24dp"
                 android:title="Đổi mật khẩu" />

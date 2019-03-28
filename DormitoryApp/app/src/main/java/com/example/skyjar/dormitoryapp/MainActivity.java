@@ -1,5 +1,6 @@
 package com.example.skyjar.dormitoryapp;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     UserRepository userRepository;
     ProgressBar progressBar;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
         txtUsername = findViewById(R.id.edtUsername);
         txtPassword = findViewById(R.id.edtPassword);
-        progressBar.setVisibility(View.GONE);
+//        progressBar.setVisibility(View.GONE);
 
         Intent intent = this.getIntent();
         Bundle bundle = intent.getBundleExtra("Bundle");
@@ -35,6 +37,10 @@ public class MainActivity extends AppCompatActivity {
             checkLogin();
     }
 
+    @Override
+    public void onBackPressed() {
+        onDestroy();
+    }
 
     private void checkLogin() {
 
@@ -50,7 +56,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    Dialog dialog;
+
     public void clickToLogin(View view) {
+        dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_loading);
+
+        dialog.show();
 
         userRepository = new UserRepository();
         String username =  txtUsername.getText().toString();
