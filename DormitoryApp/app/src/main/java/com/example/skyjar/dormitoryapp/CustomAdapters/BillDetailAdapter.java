@@ -89,7 +89,7 @@ public class BillDetailAdapter extends BaseAdapter {
 
         holder.txtServiceName.setText(service.getName());
         holder.txtQuantity.setText(service.getQuantity() + "");
-        holder.txtPrice.setText(service.getPrice() + "");
+        holder.txtPrice.setText(String.format("%,.0f",service.getPrice()) + "");
 
         return convertView;
     }

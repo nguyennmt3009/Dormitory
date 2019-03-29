@@ -61,7 +61,7 @@ public class PersonalActivity extends AppCompatActivity {
         repository.getAccountAmount(this, currentUser.getId(), new CallBackData<ResponseUniType>() {
             @Override
             public void onSuccess(ResponseUniType responseUniType) {
-                txtAccountAmount.setText(responseUniType.getData().getAccountItem().getAmount() + " đồng");
+                txtAccountAmount.setText(String.format("%,.0f",responseUniType.getData().getAccountItem().getAmount()) + " đồng");
             }
 
             @Override

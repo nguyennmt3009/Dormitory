@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackGround"
     android:orientation="vertical"
     tools:context=".CreateReportActivity">
     <android.support.design.widget.AppBarLayout
@@ -85,13 +86,13 @@
     <Button
         android:layout_marginTop="30dp"
         android:layout_width="150dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_gravity="center"
         android:text="Gửi báo cáo"
         android:textColor="#fff"
         android:textStyle="bold"
         android:textAllCaps="false"
-        android:background="@drawable/btn_style"
+        android:background="@drawable/btn_bg"
         android:id="@+id/btnSendReport"
         android:onClick="clickToSendReport"/>
     </LinearLayout>

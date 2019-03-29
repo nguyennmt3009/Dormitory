@@ -1,11 +1,14 @@
 package com.example.skyjar.dormitoryapp;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +28,7 @@ public class BillDetailActivity extends AppCompatActivity {
     TextView txtCreatedDate;
     TextView txtStatus;
     TextView txtAmount;
+    Button btnPay;
     User currentUser = null;
     
 
@@ -59,6 +63,7 @@ public class BillDetailActivity extends AppCompatActivity {
         txtId = findViewById(R.id.txtBillId);
         txtAmount = findViewById(R.id.txtBillAmount);
         txtStatus = findViewById(R.id.txtBillStatus);
+        btnPay = findViewById(R.id.btnPayment);
         
         //Call Data
         billDetail = (Bill) bundle.getSerializable("BillDetail");
@@ -72,34 +77,51 @@ public class BillDetailActivity extends AppCompatActivity {
             txtStatus.setTextColor(Color.rgb(49, 183, 34));
             findViewById(R.id.btnPayment).setVisibility(View.GONE);
         }
-        txtAmount.setText(result.getAmount() + "");
+        txtAmount.setText(String.format("%,.0f", result.getAmount()) + "");
         txtCreatedDate.setText(result.getCreatedDate());
         txtId.setText("Mã hóa đơn: " + result.getId());
+        btnPay.setVisibility(View.VISIBLE);
 
         brandServiceAdapter = new BillDetailAdapter(this, result.getBillDetails()); // layout at Adapter class
         listView.setAdapter(brandServiceAdapter);
     }
 
     public void clickToPay(View view) {
-
-        BillRepository repository = new BillRepository();
-        repository.paymentBill(currentUser.getId(), billDetail.getId(), new CallBackData<String>() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(BillDetailActivity.this);
+        builder.setCancelable(false);
+        builder.setTitle("Thanh toán");
+        builder.setMessage("Tổng hóa đơn là: " + billDetail.getAmount() + ". Bạn có muốn thanh toán?");
+        builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
             @Override
-            public void onSuccess(String s) {
-                Toast.makeText(BillDetailActivity.this, "Success", Toast.LENGTH_SHORT).show();
-
-                Intent intent = new Intent(BillDetailActivity.this, HomeActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("CurrentUser", currentUser);
-                intent.putExtra("Bundle", bundle);
-                startActivity(intent);
-            }
-
-            @Override
-            public void onFail(String msg) {
-                Toast.makeText(BillDetailActivity.this, "Fail pay " + msg, Toast.LENGTH_SHORT).show();
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
             }
         });
+        builder.setPositiveButton("Xác nhận", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                BillRepository repository = new BillRepository();
+                repository.paymentBill(currentUser.getId(), billDetail.getId(), new CallBackData<String>() {
+                    @Override
+                    public void onSuccess(String s) {
+                        Toast.makeText(BillDetailActivity.this, "Payment Success", Toast.LENGTH_SHORT).show();
+                        initialView();
+                        Intent intent = new Intent(BillDetailActivity.this, HomeActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("CurrentUser", currentUser);
+                        intent.putExtra("Bundle", bundle);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onFail(String msg) {
+//                        Toast.makeText(BillDetailActivity.this, "Fail pay " + msg, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+        builder.show();
 
     }
 }

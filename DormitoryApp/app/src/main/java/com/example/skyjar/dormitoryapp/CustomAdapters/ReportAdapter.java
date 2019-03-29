@@ -101,6 +101,7 @@ public class ReportAdapter extends BaseAdapter {
         }
 
         holder.txtApartment.setText(problemReport.getApartment().getName());
+        holder.txtServiceItem.setText("Về dịch vụ: " + problemReport.getServiceItemName());
         if (problemReport.getDescription().length() > 30)
             holder.txtDesciption.setText("Hiện tượng: " + problemReport.getDescription().substring(0, 25).toString() + "...");
         else

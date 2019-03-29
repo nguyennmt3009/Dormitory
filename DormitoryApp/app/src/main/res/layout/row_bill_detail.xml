@@ -2,6 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@android:drawable/dialog_holo_light_frame"
+    android:onClick="clickBillDetail"
+    android:id="@+id/llBillDetail"
     android:orientation="vertical">
 
     <LinearLayout
@@ -29,20 +32,22 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_marginBottom="20dp"
-        android:weightSum="2">
+        android:weightSum="5">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:orientation="vertical"
-            android:layout_weight="1">
-
+            android:layout_weight="2.2">
             <TextView
                 android:id="@+id/txtRoom"
+                android:textStyle="bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Phòng 305"
-                android:textSize="15dp"
+                android:textSize="17dp"
                 android:textColor="#000"/>
             <TextView
                 android:id="@+id/txtApartment"
@@ -50,16 +55,6 @@
                 android:layout_height="wrap_content"
                 android:text="Chung cư Hưng Ngân"
                 android:textSize="15dp"
-                android:textColor="#000"/>
-            <TextView
-                android:id="@+id/txtAmount"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:text="Số tiền: 3,000,000 đồng"
-                android:textSize="18dp"
                 android:textColor="#000"/>
             <TextView
                 android:id="@+id/txtStatus"
@@ -70,20 +65,18 @@
                 android:textSize="15dp"
                 android:textColor="#e0ff2121"/>
         </LinearLayout>
-        <Button
-            android:id="@+id/btnBillDetail"
-            android:layout_width="190dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
+        <TextView
+            android:id="@+id/txtAmount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
             android:layout_gravity="center_vertical"
-            android:textColor="#fff"
+            android:gravity="right"
+            android:text="-3,000,000"
             android:textStyle="bold"
-            android:textAllCaps="false"
-            android:text="Chi tiết"
-            android:layout_marginRight="20dp"
-            android:background="@drawable/btn_style"
-            android:onClick="clickBillDetail"
-            />
+            android:textSize="20dp"
+            android:textColor="@color/colorPrimaryDark"/>
+
     </LinearLayout>
 
 </LinearLayout>

@@ -100,8 +100,8 @@ public class ContractDetailAdapter extends BaseAdapter {
             str += ("\t" + s + "\n");
         holder.txtListName.setText(str);
         holder.txtDate.setText(contract.getCreateDate());
-        holder.txtDeposit.setText(contract.getDeposit());
-        holder.txtMonthlyFee.setText(contract.getMonthlyFee());
+        holder.txtDeposit.setText(String.format("%,.0f",contract.getDeposit()));
+        holder.txtMonthlyFee.setText(String.format("%,.0f",contract.getMonthlyFee()));
 
         return convertView;
     }

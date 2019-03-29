@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/shape_round"
     android:orientation="vertical">
 
     <LinearLayout
@@ -44,7 +45,7 @@
                 android:id="@+id/txtServiceItem"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Số tiền: 3,000,000 đồng"
+                android:text="Chung cư Hưng Ngân"
                 android:textSize="15dp"
                 android:textColor="#000"/>
             <TextView
@@ -54,7 +55,6 @@
                 android:text="Chung cư Hưng Ngân"
                 android:textSize="15dp"
                 android:textColor="#000"/>
-
         </LinearLayout>
         <TextView
             android:id="@+id/txtStatus"

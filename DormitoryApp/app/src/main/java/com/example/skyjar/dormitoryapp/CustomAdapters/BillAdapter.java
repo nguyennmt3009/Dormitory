@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.skyjar.dormitoryapp.Entities.Bill;
@@ -71,7 +72,8 @@ public class BillAdapter extends BaseAdapter {
         TextView txtApartment;
         TextView txtStatus;
         TextView txtDate;
-        Button btnDetail;
+        LinearLayout llBillDetail;
+//        Button btnDetail;
     }
 
     @Override
@@ -88,7 +90,8 @@ public class BillAdapter extends BaseAdapter {
             holder.txtApartment = convertView.findViewById(R.id.txtApartment);
             holder.txtStatus = convertView.findViewById(R.id.txtStatus);
             holder.txtDate = convertView.findViewById(R.id.txtDate);
-            holder.btnDetail = convertView.findViewById(R.id.btnBillDetail);
+//            holder.btnDetail = convertView.findViewById(R.id.btnBillDetail);
+            holder.llBillDetail = convertView.findViewById(R.id.llBillDetail);
 
             convertView.setTag(holder);
         } else {
@@ -104,10 +107,11 @@ public class BillAdapter extends BaseAdapter {
         else
             holder.txtStatus.setTextColor(Color.rgb(255, 33, 33));
         holder.txtRoom.setText(bill.getRoomName());
-        holder.txtAmount.setText("Số tiền: " + bill.getAmount() + " đồng");
+        holder.txtAmount.setText(String.format("%,.0f",bill.getAmount()) + "");
         holder.txtApartment.setText(bill.getApartmentName());
         holder.txtMonth.setText(bill.getMonth());
-        holder.btnDetail.setId(bill.getId());
+//        holder.btnDetail.setId(bill.getId());
+        holder.llBillDetail.setId(bill.getId());
 
         return convertView;
     }

@@ -1,6 +1,7 @@
 package com.example.skyjar.dormitoryapp;
 
 import android.content.Intent;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +37,8 @@ public class ReportActivity extends AppCompatActivity {
     ArrayAdapter<ReportStatus> dataAdapter2;
     List<ProblemReport> problemReportList;
     TextView txtNoReport;
+    ProgressBar progressBar;
+    SwipeRefreshLayout pullToRefresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +53,16 @@ public class ReportActivity extends AppCompatActivity {
                 finish();
             }
         });
+        progressBar = findViewById(R.id.progressBar);
 
+        pullToRefresh = (SwipeRefreshLayout) findViewById(R.id.pullToRefresh);
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                initView();
+                pullToRefresh.setRefreshing(false);
+            }
+        });
         //Render bill list
 
         initView();
@@ -64,10 +77,10 @@ public class ReportActivity extends AppCompatActivity {
         repository.getReportList(this, user.getId(), new CallBackData<List<ProblemReport>>() {
             @Override
             public void onSuccess(List<ProblemReport> problemReports) {
-                Toast.makeText(ReportActivity.this, "Get data successful", Toast.LENGTH_SHORT).show();
-                if (problemReports.size() == 0)
+                if (problemReports.size() == 0) {
                     txtNoReport.setVisibility(View.VISIBLE);
-                else {
+                    progressBar.setVisibility(View.GONE);
+                } else {
                     setSpinnerAdapter(problemReports);
                 }
 
@@ -75,7 +88,6 @@ public class ReportActivity extends AppCompatActivity {
 
             @Override
             public void onFail(String msg) {
-                Toast.makeText(ReportActivity.this, "Get data failed", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -89,6 +101,8 @@ public class ReportActivity extends AppCompatActivity {
         reportAdapter = new ReportAdapter(this, R.layout.row_report, listReport);
 //        setSpinnerAdapter(problemReports);
         listView.setAdapter(reportAdapter);
+        progressBar.setVisibility(View.GONE);
+        reportAdapter.notifyDataSetChanged();
 
 
     }
@@ -99,13 +113,14 @@ public class ReportActivity extends AppCompatActivity {
         boolean checkName = false;
 
         //add data for apartment
-        apartmentList.add(new Apartment(-1,"Tất cả",null,null));
+        apartmentList.add(new Apartment(-1, "Tất cả", null, null));
         for (ProblemReport pr : problemReports) {
             if (apartmentList != null) {
                 for (Apartment a : apartmentList) {
                     if (pr.getApartment().getId() == a.getId()) checkName = true;
                 }
-                if (!checkName) apartmentList.add(pr.getApartment()); else checkName = false;
+                if (!checkName) apartmentList.add(pr.getApartment());
+                else checkName = false;
             } else apartmentList.add(pr.getApartment());
         }
         //add data for status
@@ -133,26 +148,42 @@ public class ReportActivity extends AppCompatActivity {
         dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnStatus.setAdapter(dataAdapter2);
 
-        AdapterView.OnItemSelectedListener myListener=new AdapterView.OnItemSelectedListener() {
+        AdapterView.OnItemSelectedListener myListener = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Apartment apartment = (Apartment) spnApartment.getSelectedItem();
-                ReportStatus reportStatus =(ReportStatus) spnStatus.getSelectedItem();
+                ReportStatus reportStatus = (ReportStatus) spnStatus.getSelectedItem();
                 switch (parent.getId()) {
                     case R.id.spnApartment:
                         apartment = apartmentList.get(position);
-                        if (apartment.getId() == -1 && reportStatus.getId() == -1) buildLayout(problemReports);
-                            else if (apartment.getId() == -1) buildLayout(filter(problemReports,reportStatus));
-                                else if (reportStatus.getId() == -1) buildLayout(filter(problemReports,apartment));
-                                    else buildLayout(filter(problemReports,apartment,reportStatus));
+                        if (apartment.getId() == -1 && reportStatus.getId() == -1)
+                            buildLayout(problemReports);
+                        else if (apartment.getId() == -1)
+                            buildLayout(filter(problemReports, reportStatus));
+                        else if (reportStatus.getId() == -1) {
+                            progressBar.setVisibility(View.VISIBLE);
+                            buildLayout(filter(problemReports, apartment));
+                        } else {
+                            progressBar.setVisibility(View.VISIBLE);
+                            buildLayout(filter(problemReports, apartment, reportStatus));
+                        }
                         break;
                     case R.id.spnStatus:
                         reportStatus = statusList.get(position);
-                        if (apartment.getId() == -1 && reportStatus.getId() == -1) buildLayout(problemReports);
-                            else if (apartment.getId() == -1) buildLayout(filter(problemReports,reportStatus));
-                                else if (reportStatus.getId() == -1) buildLayout(filter(problemReports,apartment));
-                                    else buildLayout(filter(problemReports,apartment,reportStatus));
-                                        break;
+                        if (apartment.getId() == -1 && reportStatus.getId() == -1) {
+                            progressBar.setVisibility(View.VISIBLE);
+                            buildLayout(problemReports);
+                        } else if (apartment.getId() == -1) {
+                            progressBar.setVisibility(View.VISIBLE);
+                            buildLayout(filter(problemReports, reportStatus));
+                        } else if (reportStatus.getId() == -1) {
+                            progressBar.setVisibility(View.VISIBLE);
+                            buildLayout(filter(problemReports, apartment));
+                        } else {
+                            progressBar.setVisibility(View.VISIBLE);
+                            buildLayout(filter(problemReports, apartment, reportStatus));
+                        }
+                        break;
                 }
             }
 
@@ -234,36 +265,38 @@ public class ReportActivity extends AppCompatActivity {
 //        });
 //    }
 
-    public List<ProblemReport> filter(List<ProblemReport> problemReports,Apartment a, ReportStatus rs) {
+    public List<ProblemReport> filter(List<ProblemReport> problemReports, Apartment a, ReportStatus rs) {
         List<ProblemReport> list = new ArrayList<>();
-        for (ProblemReport p: problemReports) {
+        for (ProblemReport p : problemReports) {
             if (a.getId() == p.getApartment().getId()
                     && rs.getId() == p.getStatus().getId()) list.add(p);
         }
         return list;
     }
 
-    public List<ProblemReport> filter(List<ProblemReport> problemReports,Apartment a) {
+    public List<ProblemReport> filter(List<ProblemReport> problemReports, Apartment a) {
         List<ProblemReport> list = new ArrayList<>();
-        for (ProblemReport p: problemReports) {
+        for (ProblemReport p : problemReports) {
             if (a.getId() == p.getApartment().getId()) list.add(p);
         }
         return list;
     }
 
-    public List<ProblemReport> filter(List<ProblemReport> problemReports,ReportStatus rs) {
+    public List<ProblemReport> filter(List<ProblemReport> problemReports, ReportStatus rs) {
         List<ProblemReport> list = new ArrayList<>();
-        for (ProblemReport p: problemReports) {
+        for (ProblemReport p : problemReports) {
             if (rs.getId() == p.getStatus().getId()) list.add(p);
         }
         return list;
     }
+
     public void clickToCreateReport(View view) {
         Intent intent = new Intent(this, CreateReportActivity.class);
         Bundle bundle = new Bundle();
         bundle.putSerializable("CurrentUser", currentUser);
         intent.putExtra("Bundle", bundle);
-        startActivity(intent);intent = new Intent(this, CreateReportActivity.class);
+        startActivity(intent);
+        intent = new Intent(this, CreateReportActivity.class);
         bundle = new Bundle();
         bundle.putSerializable("CurrentUser", currentUser);
         intent.putExtra("Bundle", bundle);

@@ -2,14 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    android:background="@android:drawable/dialog_holo_light_frame"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="10dp"
-        android:layout_marginBottom="20dp"
+        android:layout_margin="10dp"
         android:weightSum="2">
         <LinearLayout
             android:layout_width="match_parent"
@@ -57,7 +59,10 @@
             android:layout_weight="1"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="20dp"
-            android:background="@drawable/btndetail"
+            android:background="@drawable/btn_bg"
+            android:text="Chi tiết"
+            android:textColor="#fff"
+            android:textStyle="bold"
             android:onClick="clickToContractDetail"
             />
     </LinearLayout>

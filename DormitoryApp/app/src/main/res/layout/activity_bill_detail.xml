@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackGround"
     android:orientation="vertical"
     android:theme="@style/MyAppTheme.NoActionBar"
     tools:context=".BillDetailActivity">
@@ -96,37 +97,43 @@
                     android:text="Số tiền"
                     android:layout_weight="1"/>
             </LinearLayout>
-            <ListView
-                android:id="@+id/lstBrandService"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"></ListView>
+                <ListView
+                    android:id="@+id/lstBrandService"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                </ListView>
         </LinearLayout>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:textStyle="bold"
-            android:textColor="#000"
-            android:text="Tổng cộng"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/txtBillAmount"
-            android:gravity="right"
-            android:textColor="#000"
-            android:layout_marginBottom="20dp"
-            android:textStyle="bold"
-            android:textSize="30dp"
-            android:text="3,000,000 đồng"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:textStyle="bold"
+                android:textColor="#000"
+                android:text="Tổng cộng"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtBillAmount"
+                android:gravity="right"
+                android:textColor="#000"
+                android:layout_marginBottom="20dp"
+                android:textStyle="bold"
+                android:textSize="30dp"
+                android:text="3,000,000 đồng"/>
 
-        <Button
-            android:layout_width="150dp"
-            android:layout_height="45dp"
-            android:gravity="center"
-            android:id="@+id/btnPayment"
-            android:background="@drawable/btnpayment"
-            android:layout_gravity="center"
-            android:onClick="clickToPay"/>
+            <Button
+                android:layout_width="150dp"
+                android:layout_height="45dp"
+                android:gravity="center"
+                android:id="@+id/btnPayment"
+                android:background="@drawable/btn_bg"
+                android:text="Thanh toán"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:textSize="20dp"
+                android:layout_gravity="center"
+                android:onClick="clickToPay"/>
+
     </LinearLayout>
 
 

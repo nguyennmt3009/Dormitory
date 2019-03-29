@@ -1,6 +1,7 @@
 package com.example.skyjar.dormitoryapp;
 
 import android.content.Intent;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -23,6 +24,7 @@ public class ContractListActivity extends AppCompatActivity {
     List<Contract> listContract;
     User currentUser = null;
     TextView txtNoContract;
+    SwipeRefreshLayout pullToRefresh;
 
 
     @Override
@@ -40,6 +42,14 @@ public class ContractListActivity extends AppCompatActivity {
         });
 
         txtNoContract = (TextView) findViewById(R.id.txtNoContract);
+        pullToRefresh = (SwipeRefreshLayout) findViewById(R.id.pullToRefresh);
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                initView();
+                pullToRefresh.setRefreshing(false);
+            }
+        });
         initView();
     }
 
@@ -77,6 +87,7 @@ public class ContractListActivity extends AppCompatActivity {
 
 
         listView.setAdapter(contractApdater);
+        contractApdater.notifyDataSetChanged();
     }
 
     public void clickToContractDetail(View view) {

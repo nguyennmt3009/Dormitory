@@ -6,12 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.skyjar.dormitoryapp.Entities.Transaction;
 import com.example.skyjar.dormitoryapp.R;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -75,6 +77,7 @@ public class TransactionAdapter extends BaseAdapter {
         TextView txtTransName;
         TextView txtDate;
         TextView txtAmount;
+        ImageView ivTransaction;
     }
 
     private Date getDate(String mess, String pattern)
@@ -102,6 +105,7 @@ public class TransactionAdapter extends BaseAdapter {
             holder.txtTransName = convertView.findViewById(R.id.txtTransName);
             holder.txtDate = convertView.findViewById(R.id.txtDate);
             holder.txtAmount = convertView.findViewById(R.id.txtAmount);
+            holder.ivTransaction = convertView.findViewById(R.id.ivTransaction);
 
             convertView.setTag(holder);
         } else {
@@ -112,15 +116,18 @@ public class TransactionAdapter extends BaseAdapter {
 
         if (!transaction.isIs_debit()) {
             holder.txtTransName.setText("Thanh toán hóa đơn: " + transaction.getBillId());
-            holder.txtAmount.setText("-" + transaction.getAmount());
+            holder.txtDate.setText("Ngày: " + transaction.getDate());
+            holder.txtAmount.setText("+" + String.format("%,.0f",transaction.getAmount()));
+            holder.ivTransaction.setImageResource(R.drawable.payment);
             holder.txtAmount.setTextColor(Color.rgb(255, 33, 33));
+//            holder.txtAmount.setTextColor();
         } else {
             holder.txtTransName.setText("Nạp tiền vào tài khoản");
-            holder.txtAmount.setText("+" + transaction.getAmount());
+            holder.ivTransaction.setImageResource(R.drawable.deposit);
+            holder.txtAmount.setText("+" + String.format("%,.0f",transaction.getAmount()));
             holder.txtAmount.setTextColor(Color.rgb(49, 183, 34));
         }
         holder.txtDate.setText("Ngày: " + transaction.getDate());
-
         return convertView;
     }
 }

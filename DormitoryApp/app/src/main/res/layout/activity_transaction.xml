@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackGround"
     tools:context=".TransactionActivity">
 
     <LinearLayout
@@ -48,7 +49,7 @@
                 android:layout_weight="1"
                 />
             <TextView
-                android:text="đén ngày"
+                android:text="Đến ngày"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -58,26 +59,27 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="55dp"
             android:weightSum="2"
             android:orientation="horizontal">
-
-            <TextSwitcher
-                android:id="@+id/spnFromDate"
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/txtFromDate"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="00/00/2019"
-                android:backgroundTintMode="add"
-                android:layout_weight="1"
-                />
-            <Button
-                android:id="@+id/spnToDate"
-                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:textSize="15dp"
+                android:text="00/00/0000"
+                android:background="@android:drawable/dialog_holo_light_frame"
+                android:layout_weight="1"/>
+            <TextView
+                android:id="@+id/txtToDate"
+                android:background="@android:drawable/dialog_holo_light_frame"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="00/00/2019"
-                android:layout_weight="1"
-                android:backgroundTintMode="add"
-                />
+                android:textSize="15dp"
+                android:gravity="center"
+                android:text="dd/mm/yyyy"
+                android:layout_weight="1"/>
 
 
         </LinearLayout>
@@ -91,10 +93,20 @@
             android:text="Không có giao dịch nào!"
             />
 
-        <ListView
-            android:id="@+id/listTransaction"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/pullToRefresh"
+            android:layout_height="match_parent"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"></ListView>
+            android:layout_marginTop="10dp">
+            <ListView
+
+                android:layout_marginTop="12dp"
+                android:dividerHeight="7dp"
+                android:layout_margin="5dp"
+                android:id="@+id/listTransaction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></ListView>
+        </android.support.v4.widget.SwipeRefreshLayout>
     </LinearLayout>
 
 

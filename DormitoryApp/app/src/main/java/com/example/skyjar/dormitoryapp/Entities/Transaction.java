@@ -1,6 +1,11 @@
 package com.example.skyjar.dormitoryapp.Entities;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class Transaction implements Serializable {
@@ -18,9 +23,10 @@ public class Transaction implements Serializable {
         this.data = data;
     }
 
-    public class Trans {
-        private double amount;
+    public class Trans implements Serializable {
+        private float amount;
         private String date;
+        @SerializedName("bill_id")
         private int billId;
         private boolean is_debit;
 
@@ -28,12 +34,27 @@ public class Transaction implements Serializable {
             return amount;
         }
 
-        public void setAmount(double amount) {
+        public void setAmount(float amount) {
             this.amount = amount;
         }
 
         public String getDate() {
-            return date;
+            String dateFm = Date(date, "dd/MM/yyyy");
+            return dateFm;
+        }
+
+        private String Date(String mess, String pattern)
+        {
+            try
+            {
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.S");
+                Date tempDate=simpleDateFormat.parse(mess);
+                SimpleDateFormat outputDateFormat = new SimpleDateFormat(pattern);
+                return outputDateFormat.format(tempDate);
+            } catch (Exception e)
+            {
+            }
+            return mess;
         }
 
         public void setDate(String date) {
@@ -60,7 +81,7 @@ public class Transaction implements Serializable {
 
         }
 
-        public Trans(double amount, String date, int billId, boolean is_debit) {
+        public Trans(float amount, String date, int billId, boolean is_debit) {
 
             this.amount = amount;
             this.date = date;

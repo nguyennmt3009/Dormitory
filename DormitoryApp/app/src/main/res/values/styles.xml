@@ -36,4 +36,7 @@
     <style name="ActionButtonOverflowStyle" parent="android:style/Widget.Holo.ActionButton.Overflow">
         <item name="android:src">@drawable/ic_notifications_white_24dp</item>
     </style>
+    <style name="SplashscreenTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/bg_splashscreen</item>
+    </style>
 </resources>

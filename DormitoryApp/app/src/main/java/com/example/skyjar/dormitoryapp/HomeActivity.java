@@ -3,6 +3,7 @@ package com.example.skyjar.dormitoryapp;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -38,6 +39,7 @@ public class HomeActivity extends AppCompatActivity
     RadioGroup rdGroup;
     TextView txtUserMenu;
     ProgressBar progressBar;
+    SwipeRefreshLayout pullToRefresh;
 
 
     @Override
@@ -70,6 +72,15 @@ public class HomeActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        pullToRefresh = (SwipeRefreshLayout) findViewById(R.id.pullToRefresh);
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                initialView();
+                pullToRefresh.setRefreshing(false);
+            }
+        });
 
         txtWelcome = findViewById(R.id.txtWelcome);
         txtStatusNull = findViewById(R.id.txtStatusNull);
@@ -122,7 +133,7 @@ public class HomeActivity extends AppCompatActivity
 
         listView.setAdapter(billDetailAdapter);
         progressBar.setVisibility(View.GONE);
-
+        billDetailAdapter.notifyDataSetChanged();
     }
 
     public void clickBillDetail(View view) {
