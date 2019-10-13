@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "398199882850",
+    "firebase_url": "https://apartment-mobile.firebaseio.com",
+    "project_id": "apartment-mobile",
+    "storage_bucket": "apartment-mobile.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:398199882850:android:dcbc0b9baec8e91867bd3b",
+        "android_client_info": {
+          "package_name": "cindy.fpt.firebaseapartment"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "398199882850-aovb1rj6im6k700iljlen49ronithnio.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfc42kRIyHs6bd4LmbxR3CJiVuNfRxIak"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "398199882850-aovb1rj6im6k700iljlen49ronithnio.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

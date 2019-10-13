@@ -80,7 +80,7 @@ public class BillDetailActivity extends AppCompatActivity {
         txtAmount.setText(String.format("%,.0f", result.getAmount()) + "");
         txtCreatedDate.setText(result.getCreatedDate());
         txtId.setText("Mã hóa đơn: " + result.getId());
-        btnPay.setVisibility(View.VISIBLE);
+//        btnPay.setVisibility(View.VISIBLE);
 
         brandServiceAdapter = new BillDetailAdapter(this, result.getBillDetails()); // layout at Adapter class
         listView.setAdapter(brandServiceAdapter);

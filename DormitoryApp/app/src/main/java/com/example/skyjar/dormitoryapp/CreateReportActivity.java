@@ -70,12 +70,12 @@ public class CreateReportActivity extends AppCompatActivity implements AdapterVi
             public void onSuccess(List<Apartment> apartments) {
                 apartmentList = apartments;
                 showData(apartments);
-                Toast.makeText(CreateReportActivity.this, "got data", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(CreateReportActivity.this, "got data", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFail(String msg) {
-                Toast.makeText(CreateReportActivity.this, "no data", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(CreateReportActivity.this, "no data", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -109,7 +109,7 @@ public class CreateReportActivity extends AppCompatActivity implements AdapterVi
         switch (parent.getId()) {
             case R.id.spnApartment:
                 // Do stuff for spinner1
-                showToast("Spinner1: position=" + position + ", Value= " + parent.getItemAtPosition(position));
+//                showToast("Spinner1: position=" + position + ", Value= " + parent.getItemAtPosition(position));
 
                 roomList = apartmentList.get(position).getRooms();
                 serviceList = apartmentList.get(position).getServices();
@@ -128,7 +128,7 @@ public class CreateReportActivity extends AppCompatActivity implements AdapterVi
 
 //                        final List<String> listServiceItem = new ArrayList<String>();
                         List<ServiceItem> serviceItemList = serviceList.get(position).getServiceItems();
-                        showToast("In switch-statement for spinner2. Value=" + parent.getItemAtPosition(position));
+//                        showToast("In switch-statement for spinner2. Value=" + parent.getItemAtPosition(position));
 
                         ArrayAdapter<ServiceItem> dataAdapter3 = new ArrayAdapter<ServiceItem>(parent.getContext(),
                                 android.R.layout.simple_spinner_item, serviceItemList);
@@ -149,7 +149,7 @@ public class CreateReportActivity extends AppCompatActivity implements AdapterVi
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-        Toast.makeText(this, "not select", Toast.LENGTH_LONG).show();
+//        Toast.makeText(this, "not select", Toast.LENGTH_LONG).show();
     }
 
     public void clickToSendReport(View view) {

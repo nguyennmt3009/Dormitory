@@ -2,7 +2,7 @@ package com.example.skyjar.dormitoryapp.utilsService;
 
 public class ConfigApi {
 
-    public static final String BASE_URL = "http://apartmentpp.azurewebsites.net/";
+    public static final String BASE_URL = "http://apartmentppp.azurewebsites.net/";
     public static final String SERVICE_URL = "http://apicrm.unicode.edu.vn/";
 
     // Bill + Bill Detail + Payment

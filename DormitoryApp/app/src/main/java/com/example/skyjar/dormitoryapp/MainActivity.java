@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                 new CallBackData<LoginResponse>() {
             @Override
             public void onSuccess(LoginResponse response) {
-                Toast.makeText(MainActivity.this, "cc", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(MainActivity.this, "cc", Toast.LENGTH_SHORT).show();
                 getUserDetail(response.getAccess_token());
             }
 
